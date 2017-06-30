@@ -33,7 +33,7 @@ Here are other possible fields for this ***&lt;meta&gt;** tag
 *   **isFile** - same as above but to browse for a file of any type
 *   **attribute (HTML Variable Only)** - allows you to specify an attribute to set instead of setting the inner HTML of an element (for example, setting the **href** of an **a** element)
 
-[Here](https://www.dropbox.com/s/07eubn63f8nqud6/cardlist.html?dl=1)'s an example of a screen where multiple variables are used. Take a look at the source code of the page for some examples.
+[Here](demos/cardlist/cardlist.html)'s an example of a screen where multiple variables are used. Take a look at the source code of the page for some examples.
 
 # Web Screen Functions
 AutoTools automatically creates some convenience JavaScript functions for you so it's easier to do certain things with the data from Web Screen Variables. Here are a few of the main ones:
@@ -41,9 +41,9 @@ AutoTools automatically creates some convenience JavaScript functions for you so
 *   **AutoTools.sendCommand(command, prefix)** - Allows you to send an AutoApps command. **prefix** is optional and if present will prepend **=:=** to the command. Example: **<div onclick="AutoTools.sendCommand('hello!')">Say Hello</div>** will send the "hello" command when clicked.
 *   **AutoTools.isSet(varName)** - returns true if the Web Screen Variable with the provide name is set, false otherwise
 *   **AutoTools.setDefault(varName,value)** - sets the variable with name **varName** to the value **value** if it's not set from Tasker
-*   **AutoTools.setDefaultValues(valuesObject)** - accepts an object like **{"var1":"value1","var2":"value2"}** and calls the **AutoTools.setDefault** function for each of the names and values in the object, so you can set all your default values in one call. Check [the source of this page](https://www.dropbox.com/s/ia2m4quij24h13q/functiondemo.html?dl=1) for an example on how to use this.
+*   **AutoTools.setDefaultValues(valuesObject)** - accepts an object like **{"var1":"value1","var2":"value2"}** and calls the **AutoTools.setDefault** function for each of the names and values in the object, so you can set all your default values in one call. Check [the source of this page](demos/functions/functiondemo.html) for an example on how to use this.
 *   **AutoTools.hide(element)** - hides an element on the page
 *   **AutoTools.show(element)** - shows an element on the page
-*   **AutoTools.variablesToElements(variableNamesArray, rootElementsId, rootElementClass, itemTransformer)** - converts AutoTools Web Screen variables to HTML elements on a list. **itemTransformer** is optional and if present will be called for every element that's created. Check [the source of this page](https://www.dropbox.com/s/ia2m4quij24h13q/functiondemo.html?dl=1) for an example on how to use this.
+*   **AutoTools.variablesToElements(variableNamesArray, rootElementsId, rootElementClass, itemTransformer)** - converts AutoTools Web Screen variables to HTML elements on a list. **itemTransformer** is optional and if present will be called for every element that's created. Check [the source of this page](demos/functions/functiondemo.html) for an example on how to use this.
 
 You can check out all of the functions [here](autotoolsfunctions.js).
