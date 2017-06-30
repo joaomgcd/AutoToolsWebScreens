@@ -1,4 +1,11 @@
 /**
+* These functions will automatically be injected into every page that is loaded with the AutoTools Web Screen action in Tasker.
+* You can use them freely in your own web screens! :)
+* If you want you can copy these to your web screen for easy testing on your PC.
+* Only the functions that call AutoToolsAndroid functions will not work on your PC, like the AutoTools.say function for example.
+*/
+
+/**
  * Create base AutoTools object that will contain everything else
  */
 var AutoTools = {};
