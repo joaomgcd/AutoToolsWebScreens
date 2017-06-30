@@ -36,7 +36,9 @@ Here are other possible fields for this ***&lt;meta&gt;** tag
 [Here](demos/cardlist/cardlist.html)'s an example of a screen where multiple variables are used. Take a look at the source code of the page for some examples.
 
 # Web Screen Functions
-AutoTools automatically creates some convenience JavaScript functions for you so it's easier to do certain things with the data from Web Screen Variables. Here are a few of the main ones:
+AutoTools automatically creates some convenience JavaScript functions for you so it's easier to do certain things with the data from Web Screen Variables. 
+You can check out all of the functions [here](autotoolsfunctions.js).
+Here are a few of the main ones:
 
 *   **AutoTools.sendCommand(command, prefix)** - Allows you to send an AutoApps command. **prefix** is optional and if present will prepend **=:=** to the command. Example: **<div onclick="AutoTools.sendCommand('hello!')">Say Hello</div>** will send the "hello" command when clicked.
 *   **AutoTools.isSet(varName)** - returns true if the Web Screen Variable with the provide name is set, false otherwise
@@ -46,4 +48,4 @@ AutoTools automatically creates some convenience JavaScript functions for you so
 *   **AutoTools.show(element)** - shows an element on the page
 *   **AutoTools.variablesToElements(variableNamesArray, rootElementsId, rootElementClass, itemTransformer)** - converts AutoTools Web Screen variables to HTML elements on a list. **itemTransformer** is optional and if present will be called for every element that's created. Check [the source of this page](demos/functions/functiondemo.html) for an example on how to use this.
 
-You can check out all of the functions [here](autotoolsfunctions.js).
+
