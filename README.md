@@ -37,7 +37,9 @@ Here are other possible fields for this ***&lt;meta&gt;** tag
 
 # Web Screen Functions
 AutoTools automatically creates some convenience JavaScript functions for you so it's easier to do certain things with the data from Web Screen Variables. 
+
 You can check out all of the functions [here](autotoolsfunctions.js).
+
 Here are a few of the main ones:
 
 *   **AutoTools.sendCommand(command, prefix)** - Allows you to send an AutoApps command. **prefix** is optional and if present will prepend **=:=** to the command. Example: **<div onclick="AutoTools.sendCommand('hello!')">Say Hello</div>** will send the "hello" command when clicked.
