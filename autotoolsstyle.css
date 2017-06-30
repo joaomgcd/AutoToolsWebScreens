@@ -1,0 +1,6 @@
+/*
+* Class used by the hide() and show() functions
+*/
+.hidden{
+    display: none !important;
+}
