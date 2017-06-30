@@ -3,6 +3,7 @@ Stuff injected into every AutoTools web Screens that you can use in your own Web
 
 # How To Use
 Look into each file and stuff will be documented :)
+If you want to try out the demos you can do so by using the direct raw Github URL as the Source in the **AutoTools Web Screen** action. For example, to use the card list demo, use [this](https://raw.githubusercontent.com/joaomgcd/AutoToolsWebScreens/master/demos/cardlist/cardlist.html) as the source.
 
 # Web Screen Variables
 You can create custom variables for a page used as an AutoTools Web Screen.
