@@ -269,3 +269,12 @@ AutoTools.say = (text,language) => AutoToolsAndroid.say(text,language);
  * Will return info about the user that's logged in to AutoTools (usually you). Try it here with the "userId" set to "me" to see what kind of output you get: https://developers.google.com/+/web/api/rest/latest/people/get
  */
 AutoTools.getUserInfo = () => JSON.parse(AutoToolsAndroid.getUserInfo());
+/**
+ * Will make your phone vibrate with the given vibration pattern.
+ * @param {string} vibration - Vibration Pattern. Same as Tasker's vibrate pattern
+ */
+AutoTools.vibrate = (vibration) => JSON.parse(AutoToolsAndroid.vibrate(vibration));
+/**
+ * Will make your phone vibrate shortly
+ */
+AutoTools.hapticFeedback = () => JSON.parse(AutoToolsAndroid.hapticFeedback());
