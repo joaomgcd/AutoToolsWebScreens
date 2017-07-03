@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Function Demo</title>
-	<script type="text/javascript">
+    <title>Function Demo</title>
+    <script type="text/javascript">
 
-	</script>    
+    </script>    
     <meta name="autotoolswebscreen" type="variablejs" id="title" label="Titles" description="A list of comma seperated titles" defaultValue="Title 1,Title 2,Title 3"/>
     <meta name="autotoolswebscreen" type="variablejs" id="text" label="Texts" description="A list of comma seperated texts" defaultValue="text 1,text 2,text 3"/>
     <script type="text/javascript">
@@ -18,12 +18,12 @@
     </script>
 </head>
 <body>
-	<div id="items"></div>
-	<div class="item">
-		<h2 class="title">Sample Title</h2>
-		<div class="text">Sample Text</div>
-	</div>
-	<script type="text/javascript">
+    <div id="items"></div>
+    <div class="item">
+        <h2 class="title">Sample Title</h2>
+        <div class="text">Sample Text</div>
+    </div>
+    <script type="text/javascript">
         //This has to be called AFTER the element with the "item" class is declared above.
         //["title", "text"] is an array with the AutoTools Web Screen variables that you want to convert to a list
         //"items" is the ID of the element in which the list should be created
@@ -44,7 +44,14 @@
             </div>
         */
 
-		AutoTools.variablesToElements(["title", "text"], "items","item");
-	</script>
+        AutoTools.variablesToElements(["title", "text"], "items","item",{
+            "onclick":item=>{
+                console.log(item);
+                AutoTools.sendCommand(item.text);
+                AutoTools.say(item.text);
+                AutoTools.hapticFeedback();
+            }
+        });
+    </script>
 </body>
 </html>

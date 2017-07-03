@@ -237,7 +237,12 @@ AutoTools.objectToElements = function(rootElementsId, rootElementClass, input, i
 			itemObject[prop] = {"value":value,"element":setElement};
 		}
 		if(itemTransformer){
-			itemTransformer(itemObject);
+            if(itemTransformer.item){
+                itemTransformer(itemObject);
+            }
+            if(itemTransformer.onclick){
+                resultElement.onclick = e => itemTransformer.onclick(e.target.item);
+            }
 		}
 		if(itemObject.elementToAdd){
 			resultElement = itemObject.elementToAdd;
