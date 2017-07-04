@@ -44,7 +44,7 @@ You can check out all of the functions [here](autotoolsfunctions.js).
 
 Here are a few of the main ones:
 
-*   **AutoTools.sendCommand(command, prefix)** - Allows you to send an AutoApps command. **prefix** is optional and if present will prepend **=:=** to the command. Example: **<div onclick="AutoTools.sendCommand('hello!')">Say Hello</div>** will send the "hello" command when clicked.
+*   **AutoTools.sendCommand(command, prefix, hapticFeedback)** - Allows you to send an AutoApps command. **prefix** is optional and if present will prepend **=:=** to the command. Example: **<div onclick="AutoTools.sendCommand('hello!')">Say Hello</div>** will send the "hello" command when clicked. If you set the third parameter to true it'll perform haptic feedback with the command.
 *   **AutoTools.isSet(varName)** - returns true if the Web Screen Variable with the provide name is set, false otherwise
 *   **AutoTools.setDefault(varName,value)** - sets the variable with name **varName** to the value **value** if it's not set from Tasker
 *   **AutoTools.setDefaultValues(valuesObject)** - accepts an object like **{"var1":"value1","var2":"value2"}** and calls the **AutoTools.setDefault** function for each of the names and values in the object, so you can set all your default values in one call. Check [the source of this page](demos/functions/functiondemo.html) for an example on how to use this.
