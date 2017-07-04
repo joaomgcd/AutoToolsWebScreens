@@ -15,20 +15,13 @@ var AutoTools = {};
  * @param {string} command - The command you want to send
  * @param {string} [prefix] - An optional prefix that will be prepended to the command. If it exists command will have the prefix=:=command format
  */
-AutoTools.sendCommand = function(command, prefix){
-    if(!command){
-        return;
-    }
-    if(prefix){
-        command = prefix + "=:=" + command;
-    }
-    command = "autotoolscommand://" + command;
-    window.location.href = command;
+AutoTools.sendCommand = function(command, prefix, hapticFeedback){
+    AutoToolsAndroid.sendCommand(command, prefix, hapticFeedback);
 }
 
 /**
  * Easily assign a command to an HTML element
- * @param {string} selector - The CSS selector for the element. For example, to specify an element with the id "link", you should pass in "#link" 
+ * @param {string} selector - The CSS selector for the element. For example, to specify an element with the id "link", you should pass in "#link"
  * @param {string} command - The command you want to send
  * @param {string} [prefix] - An optional prefix that will be prepended to the command. If it exists command will have the prefix=:=command format
  */
@@ -105,7 +98,7 @@ AutoTools.setDefault = (variable, value) => {
 /**
  * As above but for setting multiple values
  * @param {Object} values - Object to set default values of.
- * For example, using 
+ * For example, using
  * AutoTools.setDefault("title","My Title");
  * AutoTools.setDefault("text","my text");
  * Is the same as using
@@ -197,61 +190,72 @@ AutoTools.show = element => element.classList.remove("hidden");
  * @param {Function} [itemTransformer] - Optional transformer that will be called for each element on the page
 */
 AutoTools.objectToElements = function(rootElementsId, rootElementClass, input, itemTransformer){
-	var setByClass = (root,className,value,prop) => {
-		var element = root.querySelector(`.${className}`);
-		if(!element){
-			return;
-		}
-		if(!value){
-			hide(element);
-			return element;
-		}
-		AutoTools.show(element);
-		if(!prop){
-			var tagName = element.tagName;
-			if(tagName == "IMG"){
-				prop = "src";
-			}else if(tagName == "A"){
-				prop = "href";
-			}else{
-				prop = "innerHTML";
-			}
-		}
-		element[prop] = value;
-		return element;
-	};
-	var listRoot = document.querySelector("#"+rootElementsId);
+    var setByClass = (root,className,value,prop) => {
+        var element = root.querySelector(`.${className}`);
+        if(!element){
+            return;
+        }
+        if(!value){
+            hide(element);
+            return element;
+        }
+        AutoTools.show(element);
+        if(!prop){
+            var tagName = element.tagName;
+            if(tagName == "IMG"){
+                prop = "src";
+            }else if(tagName == "A"){
+                prop = "href";
+            }else{
+                prop = "innerHTML";
+            }
+        }
+        element[prop] = value;
+        return element;
+    };
+    var listRoot = document.querySelector("#"+rootElementsId);
     var elementToClone = document.querySelector("."+rootElementClass);
     AutoTools.hide(elementToClone);
-	var rootElement = elementToClone.cloneNode(true);
-	AutoTools.show(rootElement);
-	listRoot.innerHTML = "";
-	for(var item of input){
+    var rootElement = elementToClone.cloneNode(true);
+    AutoTools.show(rootElement);
+    listRoot.innerHTML = "";
+    if(itemTransformer.onclick){
+        var styleNoPointerEvents = document.createElement("style");
+        styleNoPointerEvents.innerHTML = `
+        .${rootElementClass}{
+            cursor: pointer;
+        }
+        .${rootElementClass} *{
+            pointer-events: none;
+        }`;
+        document.querySelector("head").appendChild(styleNoPointerEvents);
+    }
+    for(var item of input){
 
-		var resultElement = rootElement.cloneNode(true);
-		resultElement.item = item;
-		var itemObject = {"parent":resultElement};
-		for(var prop in item){
-			var value = item[prop];
-			var setElement = setByClass(resultElement,prop,value);
-			itemObject[prop] = {"value":value,"element":setElement};
-		}
-		if(itemTransformer){
+        var resultElement = rootElement.cloneNode(true);
+        resultElement.item = item;
+        var itemObject = {"parent":resultElement};
+        for(var prop in item){
+            var value = item[prop];
+            var setElement = setByClass(resultElement,prop,value);
+            itemObject[prop] = {"value":value,"element":setElement};
+        }
+        if(itemTransformer){
             if(itemTransformer.item){
                 itemTransformer(itemObject);
             }
             if(itemTransformer.onclick){
                 resultElement.onclick = e => itemTransformer.onclick(e.target.item);
             }
-		}
-		if(itemObject.elementToAdd){
-			resultElement = itemObject.elementToAdd;
-		}
-		if(itemObject.elementRoot){
-			listRoot = itemObject.elementRoot;
-		}
-		listRoot.appendChild(resultElement);
-	 }
+        }
+        if(itemObject.elementToAdd){
+            resultElement = itemObject.elementToAdd;
+        }
+        if(itemObject.elementRoot){
+            listRoot = itemObject.elementRoot;
+        }
+        listRoot.appendChild(resultElement);
+     }
 }
 /**
  * Will convert Web Screen variables into HTML elements on the page. It will map each variable with elements with the same class name. Check this page for a concrete example: https://www.dropbox.com/s/ia2m4quij24h13q/functiondemo.html?dl=1
