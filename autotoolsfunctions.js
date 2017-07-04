@@ -14,6 +14,7 @@ var AutoTools = {};
  * Send an AutoApps command from JavaScript.
  * @param {string} command - The command you want to send
  * @param {string} [prefix] - An optional prefix that will be prepended to the command. If it exists command will have the prefix=:=command format
+ * @param {boolean} [hapticFeedback] - If true, will perform a short vibration with the command
  */
 AutoTools.sendCommand = function(command, prefix, hapticFeedback){
     AutoToolsAndroid.sendCommand(command, prefix, hapticFeedback);
