@@ -1,0 +1,924 @@
+<!doctype html>
+<html>
+ <head>
+  <script type="text/javascript">var titleFromTasker = `KREWKAST`;
+var cardTitle = `Description;KREWKAST #004 - Das Studio ist ENDLICH FERTIG!!;KREWKAST #003 - Unsere ersten Smartphones, Crafter VS. Sprinter & Umzugs Update;KREWKAST #002 - WWDC Highlights, XBOX One X und Drohnenracing;KREWKAST #001 - Unser Umzug, die DJI Spark & der deutsche Webvideopreis 2017!`;
+var cardSubtextLeft = `Podcast by Felix Bahlinger, Julian Völzke;Hallo und herzlich Willkommen zum KREWKAST! Ein wöchentlicher Podcast mit viel Gelaber über die KREW, Technik, Youtube, Abenteuer und allem was Julian und mich so interessiert. In der vierten Folge quatschen wir über das endlich fertige Studio, abgefahrene Flughafen-Storys und den Unterschied zwischen OnePlus 5 und dem S8. Viel Spaß!;Hallo und herzlich willkommen zum KREWKAST! Ein wöchentlicher Podcast mit viel Gelaber über die KREW, Technik, Youtube, Abenteuer und allem was Julian und mich so interessiert. In der dritten Folge quatschen wir über unseren Umzug, unsere ersten Smartphone und vergleichen Crafter und Sprinter. Viel Spaß!;In der zweiten Episode vom KREWCAST quatschen wir über Apples WWDC Präsentation, die Xbox One X, das Finale der Drohnen Champions-League in Paris und ne ganzen Menge anderen Krams. Viel Spaß!;Hallo und herzlich willkommen zum KREWKAST! Ein wöchentlicher Podcast mit viel Gelaber über die KREW, Technik, Youtube, Abenteuer und allem was Julian und mich so interessiert. In der ersten Folge quatschen wir über unseren Umzug, die DJI Spark Drohne und den Webvideopreis. Viel Spaß!`;
+var cardCommand = `Description;KREWKAST #004 - Das Studio ist ENDLICH FERTIG!!=:=http://feeds.soundcloud.com/stream/330718118-user-405560748-krewkast-004-das-studio-ist-endlich-fertig.mp3=:=audio/mpeg;KREWKAST #003 - Unsere ersten Smartphones, Crafter VS. Sprinter & Umzugs Update=:=http://feeds.soundcloud.com/stream/328841555-user-405560748-krewkast-003-unsere-ersten-smartphones-crafter-vs-sprinter-umzugs-update.mp3=:=audio/mpeg;KREWKAST #002 - WWDC Highlights, XBOX One X und Drohnenracing=:=http://feeds.soundcloud.com/stream/327852741-user-405560748-krewkast-002-wwdc-highlights-xbox-one-x-und-drohnenracing.mp3=:=audio/mpeg;KREWKAST #001 - Unser Umzug, die DJI Spark & der deutsche Webvideopreis 2017!=:=http://feeds.soundcloud.com/stream/325837182-user-405560748-krewkast-001-unser-umzug-die-dji-spark-der-deutsche-webvideopreis-2017.mp3=:=audio/mpeg`;
+var cardCommandPrefix = `podcast`;
+var cardImage = `http://i1.sndcdn.com/avatars-000317067607-ett14m-original.jpg;http://i1.sndcdn.com/avatars-000317067607-ett14m-original.jpg;http://i1.sndcdn.com/avatars-000317067607-ett14m-original.jpg;http://i1.sndcdn.com/artworks-000228152384-7opuve-original.jpg;http://i1.sndcdn.com/artworks-000225809840-6o4dh6-original.jpg`;
+var accentColor = `#AB47BC`;
+var maxWidth = `95%`;
+var maxHeight = `433`;
+var titleTextSize = `22`;
+var cardPadding = `0`;
+var cardAlign = `Center`;
+var itemSeparator = `;`;
+</script>
+  <style type="text/css">
+.hidden{
+    display: none !important;
+}
+</style>
+  <script type="text/javascript">/**
+* These functions will automatically be injected into every page that is loaded with the AutoTools Web Screen action in Tasker.
+* You can use them freely in your own web screens! :)
+* If you want you can copy these to your web screen for easy testing on your PC.
+* Only the functions that call AutoToolsAndroid functions will not work on your PC, like the AutoTools.say function for example.
+*/
+
+/**
+ * Create base AutoTools object that will contain everything else
+ */
+var AutoTools = {};
+
+/**
+ * Send an AutoApps command from JavaScript.
+ * @param {string} command - The command you want to send
+ * @param {string} [prefix] - An optional prefix that will be prepended to the command. If it exists command will have the prefix=:=command format
+ */
+AutoTools.sendCommand = function(command, prefix){
+    if(!command){
+        return;
+    }
+    if(prefix){
+        command = prefix + "=:=" + command;
+    }
+    command = "autotoolscommand://" + command;
+    window.location.href = command;
+}
+
+/**
+ * Easily assign a command to an HTML element
+ * @param {string} selector - The CSS selector for the element. For example, to specify an element with the id "link", you should pass in "#link"
+ * @param {string} command - The command you want to send
+ * @param {string} [prefix] - An optional prefix that will be prepended to the command. If it exists command will have the prefix=:=command format
+ */
+AutoTools.commandOnClick = function(selector, command, prefix){
+    document.querySelector(selector).onclick = e => AutoTools.sendCommand(command, prefix);
+}
+/**
+ * Change a color dynamically. Got it from here: https://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
+ * Example use: Have color #ff0000 (red) and want a 30% darker shade of red, would call AutoTools.shadeBlendConvert(-0.3, "#ff0000");
+ */
+AutoTools.shadeBlendConvert = function(p, from, to) {
+    if(typeof(p)!="number"||p<-1||p>1||typeof(from)!="string"||(from[0]!='r'&&from[0]!='#')||(typeof(to)!="string"&&typeof(to)!="undefined"))return null;
+    var sbcRip=function(d){
+        var l=d.length,RGB=new Object();
+        if(l>9){
+            d=d.split(",");
+            if(d.length<3||d.length>4)return null;
+            RGB[0]=i(d[0].slice(4)),RGB[1]=i(d[1]),RGB[2]=i(d[2]),RGB[3]=d[3]?parseFloat(d[3]):-1;
+        }else{
+            if(l==8||l==6||l<4)return null;
+            if(l<6)d="#"+d[1]+d[1]+d[2]+d[2]+d[3]+d[3]+(l>4?d[4]+""+d[4]:"");
+            d=i(d.slice(1),16),RGB[0]=d>>16&255,RGB[1]=d>>8&255,RGB[2]=d&255,RGB[3]=l==9||l==5?r(((d>>24&255)/255)*10000)/10000:-1;
+        }
+        return RGB;}
+    var i=parseInt,r=Math.round,h=from.length>9,h=typeof(to)=="string"?to.length>9?true:to=="c"?!h:false:h,b=p<0,p=b?p*-1:p,to=to&&to!="c"?to:b?"#000000":"#FFFFFF",f=sbcRip(from),t=sbcRip(to);
+    if(!f||!t)return null;
+    if(h)return "rgb("+r((t[0]-f[0])*p+f[0])+","+r((t[1]-f[1])*p+f[1])+","+r((t[2]-f[2])*p+f[2])+(f[3]<0&&t[3]<0?")":","+(f[3]>-1&&t[3]>-1?r(((t[3]-f[3])*p+f[3])*10000)/10000:t[3]<0?f[3]:t[3])+")");
+    else return "#"+(0x100000000+(f[3]>-1&&t[3]>-1?r(((t[3]-f[3])*p+f[3])*255):t[3]>-1?r(t[3]*255):f[3]>-1?r(f[3]*255):255)*0x1000000+r((t[0]-f[0])*p+f[0])*0x10000+r((t[1]-f[1])*p+f[1])*0x100+r((t[2]-f[2])*p+f[2])).toString(16).slice(f[3]>-1||t[3]>-1?1:3);
+};
+
+/**
+ * Brighten the color of a property in a CSS rule
+ * @param {Object} rule - The cssRule object you want to change
+ * @param {string} propertyName - The property you want to change ("background-color" for example)
+ * @param {string} percent - Value from 0 to 100 you want to change
+ * @param {boolean} darken - If true will darken the color instead of brightening it
+ */
+AutoTools.increaseBrightnessRule = function(rule, propertyName, percent, darken){
+    var originalColor = rule.style.getPropertyValue(propertyName);
+    if(!originalColor){
+        return;
+    }
+    originalColor = originalColor.trim();
+    var newColor = AutoTools.shadeBlendConvert(percent/100,originalColor);
+    rule.style.setProperty(propertyName, newColor);
+    return newColor;
+};
+
+/**
+ * Check if the value of a Web Screen Variable was set from Tasker
+ * @param {string} value - Name of the variable you want to check
+ */
+AutoTools.isSet = value => {
+    value = window[value];
+    if(!value){
+        return false;
+    }
+    var toClass = {}.toString.call(value);
+    if(toClass  == "[object Boolean]"){
+        return value;
+    }
+    return toClass  == "[object String]";
+};
+/**
+ * Set the value of a Web Screen variable if it hasn't been set already from Tasker
+ * @param {string} variable - The name of the variable you want to set
+ * @param {string} value - The value you want to set if it hasn't been set from Tasker
+ */
+AutoTools.setDefault = (variable, value) => {
+    if(!AutoTools.isSet(variable)){
+        window[variable] = value;
+    }
+};
+/**
+ * As above but for setting multiple values
+ * @param {Object} values - Object to set default values of.
+ * For example, using
+ * AutoTools.setDefault("title","My Title");
+ * AutoTools.setDefault("text","my text");
+ * Is the same as using
+ * AutoTools.setDefaultValues({
+    "title": "My Title",
+    "text":"my text"
+   });
+ */
+AutoTools.setDefaultValues = (values) => {
+    for(var varName in values){
+        var value = values[varName];
+        AutoTools.setDefault(varName, value);
+    }
+};
+
+/**
+ * Will convert a list of comma separated Web Screen variables into a nice JSON object.
+ * @param {...string} fields - Names of the Web Screen Variables to convert
+ * For example if have
+ * - variable "title" with value = "Title1,Title2,Title3"
+ * - variable "text" with value = "text1,text2,text3"
+ * And use
+ * AutoTools.fieldsToObject("title","text");
+ * It'll return an array of objects like this:
+[
+    {
+        "title": "Title1",
+        "text": "Text1"
+    },
+    {
+        "title": "Title2",
+        "text": "text2"
+    },
+    {
+        "title": "Title3",
+        "text": "text3"
+    }
+]
+ * This is much easier to use in JavaScript :)
+ */
+AutoTools.fieldsToObject = (...fields) => {
+    var first =  fields[0];
+    var result = [];
+    /*if(!AutoTools.isSet(first)){
+        return result;
+    }*/
+    var length = null;
+    var separator = ",";
+    if(AutoTools.isSet("itemSeparator")){
+        separator =  itemSeparator;
+    }
+    for(var field of fields){
+        if(!AutoTools.isSet(field)){
+            continue;
+        }
+        var value = window[field];
+        var split = value.split(separator);
+        if(length == null){
+            length = split.length;
+        }
+        for (var i = 0; i < length; i++) {
+            if(result.length<=i){
+                result.push({});
+            }
+            var current = result[i];
+            current[field] = split[i];
+        }
+    }
+    return result;
+};
+
+/**
+ * Will hide an element on the page
+ * @param {HTMLElement} element - The element you want to hide
+*/
+AutoTools.hide = element => element.classList.add("hidden");
+
+/**
+ * Will show an element on the page
+ * @param {HTMLElement} element - The element you want to show
+*/
+AutoTools.show = element => element.classList.remove("hidden");
+
+/**
+ * Will convert an array object into HTML elements on the page. It will map each property in the object with elements with the same class name. Check this page for a concrete example: https://www.dropbox.com/s/ia2m4quij24h13q/functiondemo.html?dl=1
+ * @param {string} rootElementsId - The ID of the HTML element where you want to insert the HTML elements
+ * @param {string} rootElementClass - The class of the HTML element that you want to clone for each item in the input array
+ * @param {Object[]} input - The array that contains properties that will be mapped to each replicated HTML element
+ * @param {Function} [itemTransformer] - Optional transformer that will be called for each element on the page
+*/
+AutoTools.objectToElements = function(rootElementsId, rootElementClass, input, itemTransformer){
+    var setByClass = (root,className,value,prop) => {
+        var element = root.querySelector(`.${className}`);
+        if(!element){
+            return;
+        }
+        if(!value){
+            hide(element);
+            return element;
+        }
+        AutoTools.show(element);
+        if(!prop){
+            var tagName = element.tagName;
+            if(tagName == "IMG"){
+                prop = "src";
+            }else if(tagName == "A"){
+                prop = "href";
+            }else{
+                prop = "innerHTML";
+            }
+        }
+        element[prop] = value;
+        return element;
+    };
+    var listRoot = document.querySelector("#"+rootElementsId);
+    var elementToClone = document.querySelector("."+rootElementClass);
+    AutoTools.hide(elementToClone);
+    var rootElement = elementToClone.cloneNode(true);
+    AutoTools.show(rootElement);
+    listRoot.innerHTML = "";
+    if(itemTransformer.onclick){
+        var styleNoPointerEvents = document.createElement("style");
+        styleNoPointerEvents.innerHTML = `
+        .${rootElementClass}{
+            cursor: pointer;
+        }
+        .${rootElementClass} *{
+            pointer-events: none;
+        }`;
+        document.querySelector("head").appendChild(styleNoPointerEvents);
+    }
+    for(var item of input){
+
+        var resultElement = rootElement.cloneNode(true);
+        resultElement.item = item;
+        var itemObject = {"parent":resultElement};
+        for(var prop in item){
+            var value = item[prop];
+            var setElement = setByClass(resultElement,prop,value);
+            itemObject[prop] = {"value":value,"element":setElement};
+        }
+        if(itemTransformer){
+            if(itemTransformer.item){
+                itemTransformer(itemObject);
+            }
+            if(itemTransformer.onclick){
+                resultElement.onclick = e => itemTransformer.onclick(e.target.item);
+            }
+        }
+        if(itemObject.elementToAdd){
+            resultElement = itemObject.elementToAdd;
+        }
+        if(itemObject.elementRoot){
+            listRoot = itemObject.elementRoot;
+        }
+        listRoot.appendChild(resultElement);
+     }
+}
+/**
+ * Will convert Web Screen variables into HTML elements on the page. It will map each variable with elements with the same class name. Check this page for a concrete example: https://www.dropbox.com/s/ia2m4quij24h13q/functiondemo.html?dl=1
+ * @param {string[]} webscreenVariables - Array of variable names that you want to map to the HTML element
+ * @param {string} rootElementsId - The ID of the HTML element where you want to insert the HTML elements
+ * @param {string} rootElementClass - The class of the HTML element that you want to clone for each item in the input array
+ * @param {Function} [itemTransformer] - Optional transformer that will be called for each element on the page
+ */
+AutoTools.variablesToElements = function(webscreenVariables, rootElementsId, rootElementClass, itemTransformer){
+        var input = AutoTools.fieldsToObject(...webscreenVariables);
+        AutoTools.objectToElements(rootElementsId,rootElementClass, input, itemTransformer);
+}
+/**
+ * Will say some text out loud on your Android device
+ * @param {string} text - Text you want to say
+ * @param {string} [language] - Optional language. Will default to your device's language
+ */
+AutoTools.say = (text,language) => AutoToolsAndroid.say(text,language);
+/**
+ * Will return info about the user that's logged in to AutoTools (usually you). Try it here with the "userId" set to "me" to see what kind of output you get: https://developers.google.com/+/web/api/rest/latest/people/get
+ */
+AutoTools.getUserInfo = () => JSON.parse(AutoToolsAndroid.getUserInfo());
+/**
+ * Will make your phone vibrate with the given vibration pattern.
+ * @param {string} vibration - Vibration Pattern. Same as Tasker's vibrate pattern
+ */
+AutoTools.vibrate = (vibration) => JSON.parse(AutoToolsAndroid.vibrate(vibration));
+/**
+ * Will make your phone vibrate shortly
+ */
+AutoTools.hapticFeedback = () => JSON.parse(AutoToolsAndroid.hapticFeedback());
+</script> 
+  <style type="text/css">
+        :root {
+            --cr-toolbar-height: 56px;
+            --paper-icon-button-ink-color: white;
+            --md-background-color: #e62117;
+            --md-background-color-dark: #ba1b12;
+            --md-loading-message-color: #6e6e6e;
+            --md-toolbar-color: var(--md-background-color);
+        }
+        #topBar{
+            display: flex;
+            background-color: var(--md-toolbar-color);
+            height: var(--cr-toolbar-height);
+            align-items: center;
+            color: var(--paper-icon-button-ink-color);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            z-index: 999;
+            margin-bottom: 4px;
+        }
+        #title{
+            margin-left: 16px;          
+            font-size: 123%;
+            font-weight: 400;
+        }
+        #titleicon{
+            height: 40px;
+        }
+        #titleicon img{
+            margin-left: 16px;
+            height: 40px;
+            border-radius: 40px;
+        }
+        #topBarButtons{
+            text-align: right;
+            flex-grow: 1;
+            margin-right: 8px;
+            height: 40px;
+        }
+        #topBarButtons .button{
+            margin-top: 0px;
+            margin-right: 0px;
+            padding: 0px;
+            padding-right: 8px;
+            padding-left: 8px;
+        }
+        #topBarButtons .button:hover {
+            transform: translateY(0px);
+            box-shadow: 0px 0px 0px #777;
+        }
+        #topBarButtons .button img{
+            width: 40px;
+            border-radius: 40px;
+            pointer-events: none;
+        }
+        body {
+            font-family: Roboto, 'Segoe UI', Tahoma, sans-serif;
+            margin: 0px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 2px;
+            display: inline-block;
+            margin: 4px;
+            margin-left: 4px;
+            margin-right: 4px;
+            position: relative;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        }
+        .card:hover {
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+        }
+        .hidden{
+            display: none !important;
+        }
+        .invisible{
+            visibility: hidden !important;
+        }
+        #content{
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        #results{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            overflow: auto;
+            flex: 1;    
+            justify-content: space-around;  
+            align-items: center;    
+        }
+        /*#results .result:first-child {
+            margin-top: 8px;
+        }*/
+        .result{
+            //width: 100%;
+            padding: 24px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        .result .right{
+            display: flex;
+            flex-direction: column;         
+            justify-content: center;
+            flex: 1;
+        }
+        .animated{          
+            animation: move 0.5s ease forwards;
+        }
+        .result *{
+            pointer-events: none;
+        }
+        .result .button{
+            pointer-events: auto;
+        }
+        .result .thumbnailWrapper{
+            width: 100%;            
+            display: flex;
+            justify-content: center;
+            flex-grow: 1;
+        }
+        .result .thumbnail{
+            max-height: 350px;
+            display: block;
+            max-width: 100%;
+            height: auto;
+            justify-self: center;
+            object-fit: contain;
+        }
+        .result .righttop{
+            display: flex;
+        }
+        .result .title{
+            font-size: 22px;
+        }
+        .result .titleright{
+            font-size: 22px;
+            text-align: right;
+            flex: 1;
+        }
+        .result .bottom{
+            display: flex;
+            margin: 8px; 
+        }
+        .result .cardicon{
+            width: 50px;
+            height: 50px;
+            border-radius: 50px;
+            margin-right: 16px;
+            //align-self: center;
+        }
+        .result .rightbottom{
+            display: flex;
+            margin-top: 8px;
+            font-size: 16px;
+            color: #666;
+        }
+        .result .subTextLeft{
+            margin-right: 8px;
+        }
+        .result .subTextRight{
+            margin-left: 8px;
+        }
+        .button {
+            display: inline-block;
+            text-align: center;
+            padding: 8px;
+            color: white;
+            transition: 300ms ease-in-out;
+            cursor: pointer;
+            margin-top: 8px;
+            margin-right: 4px;
+        }  
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0px 2px 20px #777;
+        }
+
+        .green {
+            background-color: var(--md-background-color);
+            border-bottom: 3px solid var(--md-background-color-dark);
+        }
+        @keyframes move {
+            from {
+                transform: translate(120%, 0px);
+            }
+            to {
+                transform: translate(0px, 0px);
+            }
+        }
+        .ripple{
+          overflow:hidden;
+        }
+
+        .ripple-effect{
+          position: absolute;
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          background: white;
+
+            
+          animation: ripple-animation 2s;
+        }
+
+
+        @keyframes ripple-animation {
+            from {
+              transform: scale(1);
+              opacity: 0.4;
+            }
+            to {
+              transform: scale(100);
+              opacity: 0;
+            }
+        }
+    </style> 
+  <title>Card List</title> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Title" id="titleFromTasker" label="Title" description="Title to show at the top." hint="YouTube"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Title" id="titleIcon" label="Title Icon" description="Icon to show on the left of the title" isIcon="true"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Title" id="titleButtonIcon" label="Title Buttons Icons" description="List of icons to show on the right of the title, aligned to the right of the screen" isIcons="true"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Title" id="titleButtonCommand" label="Title Button Commands" description="List of commands, one for each title button."> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Cards" id="cardTitle" label="Card Titles" description="List of titles, one for each card"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Cards" id="cardTitleRight" label="Card Subtitle" description="List of subtitles, one for each card. Appear on the right of the title, aligned to the right"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Cards" id="cardSubtextLeft" label="Card Subtext Left" description="List of texts to appear below the title, on the left, one for each card"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Cards" id="cardSubtextRight" label="Card Subtext Right" description="List of texts to appear below the title, on the right, one for each card"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Cards" id="cardCommand" label="Card Commands" description="List of commands, one for each card"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Cards" id="cardCommandPrefix" label="Commands Prefix" description="If set will attach 'prefix=:=' to each command on the list"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Cards" id="cardIcon" label="Card Icons" description="List of icons, one for each card. Will appear on the left of the title if set" isIcons="true"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Cards" id="cardImage" label="Card Images" description="List of images, one for each card. Will appear above the title is set." isImages="true"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Card Buttons" id="cardButton" label="Card Buttons" description="List of Button Labels that should appear on each card"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Card Buttons" id="buttonCommand" label="Button Commands" description="List of commands, one for each button. Will add as a sufix to each card command."> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Colors" id="backgroundColor" label="Background Color" description="Background Color for the screen" isColor="true"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Colors" id="accentColor" label="Accent Color" description="Accent Color for the screen" isColor="true"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Layout" id="maxWidth" label="Max Card Width" description="Set the max width of the cards in either % or absolute value" hint="ie. 100% or 300" defaultValue="100%"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Layout" id="minWidth" label="Min Card Width" description="Set the min width of the cards in either % or absolute value" hint="ie. 30% or 150"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Layout" id="maxHeight" label="Max Image Height" description="Set the max height of the images in the cards in pixels" hint="350" defaultValue="350"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Layout" id="titleTextSize" label="Title Text Size" description="Set the size of the text for the title" hint="22" defaultValue="22"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Layout" id="cardPadding" label="Card Padding" description="Set the padding inside the card" hint="24" defaultValue="24"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Layout" id="cardAlign" label="Card Alignment" description="Define how the cards align vertically" options="Top,Center,Bottom" defaultValue="Center"> 
+  <meta name="autotoolswebscreen" type="variablejs" group="Other" id="itemSeparator" label="Item Separator" description="Set which characters separates each item in the various lists" hint="," defaultValue=","> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+ </head> 
+ <body> 
+  <div class="result card hidden invisible"> 
+   <div class="thumbnailWrapper">
+    <img class="thumbnail">
+   </div> 
+   <div class="bottom"> 
+    <img class="cardicon"> 
+    <div class="right"> 
+     <div class="righttop"> 
+      <div class="title">
+       title
+      </div> 
+      <div class="titleright hidden">
+       title right
+      </div> 
+     </div> 
+     <div class="rightbottom"> 
+      <div class="subTextLeft"></div> 
+      <div class="subTextSeparator">
+        • 
+      </div> 
+      <div class="subTextRight"></div> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="buttons"></div> 
+  </div> 
+  <div href="#" class="button ripple hidden">
+   Google
+  </div> 
+  <div class="topBarButton button hidden"> 
+   <img> 
+  </div> 
+  <div id="content"> 
+   <div id="topBar" class="hidden"> 
+    <div id="titleicon" class="hidden">
+     <img>
+    </div> 
+    <div id="title">
+     Hello
+    </div> 
+    <div id="topBarButtons"></div> 
+   </div> 
+   <div id="results"></div> 
+  </div> 
+  <script type="text/javascript">
+
+        var AutoTools = {};
+        AutoTools.sendCommand = function(command){
+            if(!command){
+                return;
+            }
+            command = "autotoolscommand://" + encodeURI(command);
+            window.location.href = command;
+        }
+        AutoTools.shadeBlendConvert = function(p, from, to) {
+            if(typeof(p)!="number"||p<-1||p>1||typeof(from)!="string"||(from[0]!='r'&&from[0]!='#')||(typeof(to)!="string"&&typeof(to)!="undefined"))return null;
+            var sbcRip=function(d){
+                var l=d.length,RGB=new Object();
+                if(l>9){
+                    d=d.split(",");
+                    if(d.length<3||d.length>4)return null;
+                    RGB[0]=i(d[0].slice(4)),RGB[1]=i(d[1]),RGB[2]=i(d[2]),RGB[3]=d[3]?parseFloat(d[3]):-1;
+                }else{
+                    if(l==8||l==6||l<4)return null;
+                    if(l<6)d="#"+d[1]+d[1]+d[2]+d[2]+d[3]+d[3]+(l>4?d[4]+""+d[4]:"");
+                    d=i(d.slice(1),16),RGB[0]=d>>16&255,RGB[1]=d>>8&255,RGB[2]=d&255,RGB[3]=l==9||l==5?r(((d>>24&255)/255)*10000)/10000:-1;
+                }
+                return RGB;}
+            var i=parseInt,r=Math.round,h=from.length>9,h=typeof(to)=="string"?to.length>9?true:to=="c"?!h:false:h,b=p<0,p=b?p*-1:p,to=to&&to!="c"?to:b?"#000000":"#FFFFFF",f=sbcRip(from),t=sbcRip(to);
+            if(!f||!t)return null;
+            if(h)return "rgb("+r((t[0]-f[0])*p+f[0])+","+r((t[1]-f[1])*p+f[1])+","+r((t[2]-f[2])*p+f[2])+(f[3]<0&&t[3]<0?")":","+(f[3]>-1&&t[3]>-1?r(((t[3]-f[3])*p+f[3])*10000)/10000:t[3]<0?f[3]:t[3])+")");
+            else return "#"+(0x100000000+(f[3]>-1&&t[3]>-1?r(((t[3]-f[3])*p+f[3])*255):t[3]>-1?r(t[3]*255):f[3]>-1?r(f[3]*255):255)*0x1000000+r((t[0]-f[0])*p+f[0])*0x10000+r((t[1]-f[1])*p+f[1])*0x100+r((t[2]-f[2])*p+f[2])).toString(16).slice(f[3]>-1||t[3]>-1?1:3);
+        };
+        AutoTools.increaseBrightnessRule = function(rule, propertyName, percent, darken){
+            var originalColor = rule.style.getPropertyValue(propertyName);
+            if(!originalColor){
+                return;
+            }
+            originalColor = originalColor.trim();
+            var newColor = AutoTools.shadeBlendConvert(percent/100,originalColor);
+            rule.style.setProperty(propertyName, newColor);
+            return newColor;
+        };
+
+        AutoTools.isSet = value => {
+            value = window[value];
+            if(!value){
+                return false;
+            }
+            var toClass = {}.toString.call(value);
+            if(toClass  == "[object Boolean]"){
+                return value;
+            }
+            return toClass  == "[object String]"; 
+        };
+        AutoTools.fieldsToObject = (...fields) => {
+            var first =  fields[0];
+            var result = [];
+            /*if(!AutoTools.isSet(first)){
+                return result;
+            }*/
+            var length = null;
+            var separator = ",";
+            if(AutoTools.isSet("itemSeparator")){
+                separator =  itemSeparator;
+            }
+            for(var field of fields){
+                if(!AutoTools.isSet(field)){
+                    continue;
+                }
+                var value = window[field];
+                var split = value.split(separator);
+                if(length == null){
+                    length = split.length;
+                }
+                for (var i = 0; i < length; i++) {
+                    if(result.length<=i){
+                        result.push({});
+                    }
+                    var current = result[i];
+                    current[field] = split[i];
+                }
+            }
+            return result;
+        };
+
+        
+        /*var cardButtons = "Chrome Grande";
+        //var cardTitle = "One,Two";
+        //var cardTitle = "One|Two|Three|Four|Five|Six|Seven";
+        //var cardTitleRight = "1|2|3|4";
+        var cardCommand = "1,2,3,4,5";
+        var cardCommandPrefix = "test";
+        //var cardSubtextLeft = "1,2";
+        //var cardSubtextRight = "right";
+        //var titleIcon = "https://help.geogebra.org/public/attachments/6b999afc674ff37e10b4bf753c56c88a.png"; 
+        //var cardIcon = "https://www.wired.com/images_blogs/gadgetlab/2010/09/enhanced-buzz-27651-1283950556-2.jpg";
+        var cardImage = "http://www.magazine-hd.com/apps/wp/wp-content/uploads/2016/11/Vaiana-poster.jpg|http://img.youtube.com/vi/0-JHq2wjB9c/mqdefault.jpg|https://thumbs.dreamstime.com/z/ferrari-show-day-super-wide-angle-01-14344459.jpg|https://s-media-cache-ak0.pinimg.com/736x/af/99/70/af99702a93bc7868a6e455358af764af.jpg";
+        var titleButtonIcon = "https://help.geogebra.org/public/attachments/6b999afc674ff37e10b4bf753c56c88a.png|https://www.wired.com/images_blogs/gadgetlab/2010/09/enhanced-buzz-27651-1283950556-2.jpg";
+        var titleButtonCommand = "title button|onter";
+        //var cardButton = "Play"; 
+        //var buttonCommand = "pppp";
+        var titleFromTasker = "Super Card List";
+        //var maxWidth = "100%";
+        var minWidth = "30%";
+        var maxHeight = "550";
+        //var autoWidth = true;
+        //var accentColor = "#43A047";
+        var titleTextSize = "12";
+        var cardPadding = "0";
+        var cardAlign = "Center";
+        var itemSeparator = "|";
+        var backgroundColor = "#00ffff00";*/
+        var inputFromTasker = AutoTools.fieldsToObject("cardTitle","cardTitleRight","cardSubtextLeft","cardSubtextRight","cardIcon","cardImage", "cardCommand", "cardCommandPrefix");
+    
+        
+        inputFromTasker.cardButtons = AutoTools.fieldsToObject("cardButton","buttonCommand");
+        inputFromTasker.titleButtons = AutoTools.fieldsToObject("titleButtonIcon","titleButtonCommand");
+        console.log(inputFromTasker);
+        if(AutoTools.isSet("accentColor")){
+            var findRootRule = ()  => {
+                for(var sheet of document.styleSheets){
+                    if(sheet.cssRules[0].selectorText == ":root"){
+                        return sheet.cssRules[0];
+                    }
+                }
+            }
+            var rootRule = findRootRule();
+            rootRule.style.setProperty("--md-background-color",accentColor);
+            var dark = AutoTools.shadeBlendConvert(-0.2, accentColor);
+            rootRule.style.setProperty("--md-background-color-dark", dark);
+        }
+        
+
+        var showError = error => document.write(error);
+        var hide = element => element.classList.add("hidden");
+        var show = element => element.classList.remove("hidden");
+        
+        var titleElement = document.querySelector("#title");
+        if(AutoTools.isSet("titleFromTasker")){
+            titleElement.innerHTML = titleFromTasker;
+            show(document.querySelector("#topBar"));
+            document.title = titleFromTasker;
+        }
+        if(!AutoTools.isSet("backgroundColor")){
+            var backgroundColor = "#e2e1e0";
+        }
+        document.querySelector("body").style["background-color"] = backgroundColor;
+        var setByClass = (root,className,value,prop) => {
+            var element = root.querySelector(`.${className}`);
+            if(!value){
+                hide(element);
+                return false;
+            }
+            show(element);
+            if(!prop){
+                prop = "innerHTML";
+            }
+            element[prop] = value;
+            return true;
+        };
+        var setNumberStyleProp = (element, value , prop) =>{
+            if(!AutoTools.isSet(value)){
+                return false;
+            }
+            value = window[value];
+            var isNumber = !isNaN(value)
+            if(isNumber){
+                value = value + "px";
+            }
+            element.style[prop] = value;
+            return true;
+        };
+        var displayResults = async function(){      
+            var resultElementBase = document.querySelector(".result").cloneNode(true);
+            show(resultElementBase);
+            var buttonBase = document.querySelector(".button").cloneNode(true);
+            show(buttonBase);
+            var resultsElement = document.querySelector("#results");
+            if(AutoTools.isSet("titleIcon")){
+                var titleIconWrapper = document.querySelector("#titleicon");
+                titleIconWrapper.querySelector("img").src = titleIcon;
+                show(titleIconWrapper);
+            }
+            if(AutoTools.isSet("cardAlign")){
+                var alignValue = null;
+                if(cardAlign == "Top"){
+                    alignValue = "flex-start";
+                }else if(cardAlign == "Center"){
+                    alignValue = "center";
+                }else if(cardAlign == "Bottom"){
+                    alignValue = "flex-end";
+                }
+                if(alignValue){
+                    resultsElement.style["align-items"] = alignValue;
+                    resultsElement.style["align-content"] = alignValue == "flex-start" ? "flex-start" : "space-between";
+                }
+            }
+            if(inputFromTasker.titleButtons && inputFromTasker.titleButtons.length > 0){
+                var topBarButtonElement = document.querySelector(".topBarButton").cloneNode(true);
+                show(topBarButtonElement);
+                var topBarButtonsElement = document.querySelector("#topBarButtons");
+                for(var titleButton of inputFromTasker.titleButtons){
+                    if(!titleButton.titleButtonIcon){
+                        continue;
+                    }
+                    var newButton = topBarButtonElement.cloneNode(true);
+
+                    newButton.titleButton = titleButton;
+                    newButton.querySelector("img").src = titleButton.titleButtonIcon;
+                    newButton.onclick = e => AutoTools.sendCommand(e.target.titleButton.titleButtonCommand);
+
+                    topBarButtonsElement.appendChild(newButton);
+                }
+            }
+            for(var item of inputFromTasker){
+
+                var resultElement = resultElementBase.cloneNode(true);
+                
+                if(setNumberStyleProp(resultElement, "minWidth", "min-width")){
+                    resultElement.style["width"] = "auto";
+                }
+                setNumberStyleProp(resultElement, "maxWidth", "max-width");
+                setNumberStyleProp(resultElement, "cardPadding", "padding");
+                setNumberStyleProp(resultElement.querySelector(".title"), "titleTextSize", "font-size");
+                setNumberStyleProp(resultElement.querySelector(".titleright"), "titleTextSize", "font-size");
+
+                resultElement.item = item;
+                if(!item.cardTitle && !item.cardTitleRight && !item.cardSubtextLeft && !item.cardSubtextRight){
+                    hide(resultElement.querySelector(".bottom"))
+                }
+                setByClass(resultElement,"title",item.cardTitle);
+                setByClass(resultElement,"titleright",item.cardTitleRight);
+                if(setByClass(resultElement,"thumbnail",item.cardImage,"src")){
+                    setNumberStyleProp(resultElement.querySelector(".thumbnail"), "maxHeight", "max-height");
+                }else{
+                    hide(resultElement.querySelector(".thumbnailWrapper"));
+                }
+
+                setByClass(resultElement,"cardicon",item.cardIcon,"src");
+                var subTextLeft = item.cardSubtextLeft;
+                var subTextRight = item.cardSubtextRight;
+                setByClass(resultElement,"subTextLeft",subTextLeft);
+                setByClass(resultElement,"subTextRight",subTextRight);
+                if(!subTextLeft && !subTextRight){
+                    hide(resultElement.querySelector(".rightbottom"));
+                }else if(!subTextRight){
+                    hide(resultElement.querySelector(".subTextSeparator"));
+                }
+                resultElement.onclick = e => AutoTools.sendCommand(getCommand(e));          
+                var buttonsElement = resultElement.querySelector(".buttons");
+                if(inputFromTasker.cardButtons && inputFromTasker.cardButtons.length > 0){
+                    for(var cardButton of inputFromTasker.cardButtons){
+                        if(!cardButton.cardButton){
+                            continue;
+                        }
+                        var buttonElement = buttonBase.cloneNode(true);
+                        buttonElement.classList.add("green");
+                        buttonElement.item = item;
+                        buttonElement.cardButton = cardButton;
+                        buttonElement.innerHTML = cardButton.cardButton;
+                        buttonElement.onclick = e => AutoTools.sendCommand(getCommand(e));
+                        buttonsElement.appendChild(buttonElement);
+                    }   
+                }else{
+                    hide(buttonsElement);
+                }
+                resultsElement.appendChild(resultElement);
+            }
+            var showResultElement = element => {
+                setTimeout(()=>{
+                    element.classList.add("animated");
+                    element.classList.remove("invisible");
+                },i+=100);
+            }
+            var i = 0;
+            for(var resultElement of resultsElement.children){
+                showResultElement(resultElement);
+            }
+        };
+        var getCommand = e =>{
+            e.stopPropagation();
+
+            /*var rippleEffectElement = document.createElement("div");
+            rippleEffectElement.classList.add("ripple-effect");
+            rippleEffectElement.style.top =(-e.target.clientHeight/2+e.offsetY) + "px";
+            rippleEffectElement.style.left = (-e.target.clientWidth/2+e.offsetX) + "px";
+            e.target.appendChild(rippleEffectElement);
+            setTimeout(()=>e.target.removeChild(rippleEffectElement),1800);*/
+
+            var item = e.target.item;
+            var command = item.cardCommand;
+            if(!command){
+                command = item.cardTitle;
+            }
+            if(AutoTools.isSet("cardCommandPrefix")){
+                command = cardCommandPrefix + "=:=" + command;
+            }
+            var cardButton = e.target.cardButton;
+            if(cardButton && cardButton.cardButton.indexOf("%") != 0){              
+                var buttonCommand = cardButton.buttonCommand;
+                if(!buttonCommand){
+                    buttonCommand = cardButton.cardButton;
+                }
+                command += `=:=${buttonCommand}`;
+            }
+            console.log(command);
+            return command;
+        };
+        displayResults();
+        /*if(searchQuery){
+            displayResults(searchQuery);
+        }else{
+            document.write("no way...");
+        }*/
+    </script>   
+ </body>
+</html>
