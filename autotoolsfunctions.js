@@ -17,6 +17,10 @@ var AutoTools = {};
  * @param {boolean} [hapticFeedback] - If true, will perform a short vibration with the command
  */
 AutoTools.sendCommand = function(command, prefix, hapticFeedback){
+    if(!command){
+        return;
+    }
+    console.log("Sending command: " + command+";"+prefix);
     AutoToolsAndroid.sendCommand(command, prefix, hapticFeedback);
 }
 
