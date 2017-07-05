@@ -20,6 +20,9 @@ AutoTools.sendCommand = function(command, prefix, hapticFeedback){
     if(!command){
         return;
     }
+    if(!prefix){
+        prefix = null;
+    }
     console.log("Sending command: " + command+";"+prefix);
     AutoToolsAndroid.sendCommand(command, prefix, hapticFeedback);
 }
