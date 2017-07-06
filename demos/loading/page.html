@@ -33,7 +33,7 @@
 			"textColor":"white",
 			"textPosition":"Top"
 		});
-		loadingType = loadingType.toLowerCase().replace(" ","");
+		loadingType = loadingType.toLowerCase().replace(new RegExp(" ", 'g'), "");
 		var htmlFile = loadingType+'.html';
 		console.log(loadingType);
 		/*var bodyStylesheet = document.querySelector("#bodystylesheet").cloneNode(true);

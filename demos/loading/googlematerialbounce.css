@@ -1,14 +1,7 @@
-#container {
-  display: absolute;
-  background: none;
-  position: fixed;
-  margin: auto;
+#googlematerialbounce {
+  position: relative;
   width: 268px;
   height: 64px;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
 }
 
 #obj {
