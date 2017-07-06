@@ -1,0 +1,48 @@
+#container {
+  display: absolute;
+  background: none;
+  position: fixed;
+  margin: auto;
+  width: 268px;
+  height: 64px;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#obj {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin: 16px;
+  -webkit-animation-name: float;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-duration: 1.5s;
+}
+#obj:nth-child(1) {
+  background: #4285F4;
+}
+#obj:nth-child(2) {
+  background: #EA4335;
+  -webkit-animation-delay: calc(.18 * 1.5s);
+}
+#obj:nth-child(3) {
+  background: #FBBC05;
+  -webkit-animation-delay: calc(0.18 * 1.5s * 2);
+}
+#obj:nth-child(4) {
+  background: #34A853;
+  -webkit-animation-delay: calc(0.18 * 1.5s * 3);
+}
+
+@-webkit-keyframes float {
+  0%, 100% {
+    -webkit-transform: translateY(-calc(32px * .2));
+  }
+  50% {
+    -webkit-transform: translateY(calc(32px * .2));
+  }
+}
