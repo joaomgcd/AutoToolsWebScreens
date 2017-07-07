@@ -17,7 +17,7 @@
 		}
 	</style>
 	<meta name="autotoolswebscreen" type="variablejs" id="loadingType" label="Loading Type" description="Choose the type of loading screen you want" defaultValue="Simple Dots" options="Simple Dots,Stairs,Bounce,Uphill,Pacman,Spinning Flower,Shrinking Hexagon,Red Vortex,Color Circles,Rotating Plane,Double Bounce,Wave,Wandering Cubes,Pulse,Chasing Dots,Three Bounce,Circle,Cube Grid,Fading Circle,Folding Cube,Google Material Bounce,Google Material Preloader" isHtmlLink="true" isCssLink="true" />
-   	<meta name="autotoolswebscreen" type="variablejs" id="text" group="Text" label="Loading Text" description="Text to display" defaultValue="Loading..." Hint="Loading..." />
+   	<meta name="autotoolswebscreen" type="variablejs" id="text" group="Text" label="Loading Text" description="Text to display. Can be used with the update feature." defaultValue="Loading..." Hint="Loading..." />
    	<meta name="autotoolswebscreen" type="variablejs" id="textSize" group="Text" label="Text Size" defaultValue="24" Hint="24" />
    	<meta name="autotoolswebscreen" type="variablejs" id="textColor" group="Text" label="Text Color" defaultValue="white" Hint="white" isColor="true" />
    	<meta name="autotoolswebscreen" type="variablejs" id="textPosition" group="Text" label="Text Position" defaultValue="Top" options="Top,Bottom" />
@@ -27,6 +27,11 @@
    <span id="loadingText" class="loadingText">Now Loading...</span>
 </body>
 	<script type="text/javascript">
+		var autoToolsUpdateValues = function(values){
+			if(values.text){
+				document.querySelector("#loadingText").innerHTML = values.text;	
+			}
+		}
 		AutoTools.setDefaultValues({
 			"text":"Loading...",
 			"textSize":"24",
