@@ -54,11 +54,11 @@ Here are a few of the main ones:
 
 # Updating Values
 
-Instead of doing a full refresh every time AutoTools allows you to update stuff on the page. This is done by calling the 
+Instead of doing a full refresh every time AutoTools allows you to update stuff on the page. This is done by AutoTools calling the 
 ```
 autoToolsUpdateValues(values)
 ```
-function.
+function when it wants to update values so you need to declare it on the page if you want to support updating.
 **values** will contain an object with properties named after the Web Screen variables declared on the page. So, for example, if you declare a **title** and a **text** variable on the page, you'll get an object like
 
 ```
