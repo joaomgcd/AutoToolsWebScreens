@@ -52,4 +52,21 @@ Here are a few of the main ones:
 *   **AutoTools.show(element)** - shows an element on the page
 *   **AutoTools.variablesToElements(variableNamesArray, rootElementsId, rootElementClass, itemTransformer)** - converts AutoTools Web Screen variables to HTML elements on a list. **itemTransformer** is optional and if present will be called for every element that's created. Check [the source of this page](demos/functions/functiondemo.html) for an example on how to use this.
 
+# Updating Values
 
+Instead of doing a full refresh every time AutoTools allows you to update stuff on the page. This is done by calling the 
+```
+autoToolsUpdateValues(values)
+```
+function.
+**values** will contain an object with properties named after the Web Screen variables declared on the page. So, for example, if you declare a **title** and a **text** variable on the page, you'll get an object like
+
+```
+{
+  "title":"Some Title",
+  "text:"some text"
+}
+```
+You can then update the values on the page how ever you please based on this object.
+
+The **Update** option will only show in the Tasker configuration screen if the **autoToolsUpdateValues()** function is present on the main **Source** page.
