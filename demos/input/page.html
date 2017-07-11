@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">		
+		body{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+	</style>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+<body>
+	<input type="text" id="input" />
+	<input type="button" value="Send Command" onclick="AutoTools.sendCommand(inputElement.value);" />
+	<script type="text/javascript">
+		var inputElement = document.querySelector("#input");
+		inputElement.focus();
+	</script>
+</body>
+</html>
