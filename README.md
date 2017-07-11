@@ -70,3 +70,13 @@ function when it wants to update values so you need to declare it on the page if
 You can then update the values on the page how ever you please based on this object.
 
 The **Update** option will only show in the Tasker configuration screen if the **autoToolsUpdateValues()** function is present on the main **Source** page.
+
+#Debugging
+
+You can use
+```
+console.debug("log message");
+```
+to make logs show up in the AutoTools logs if **System Logs** are enabled in the main AutoTools app under **Logs And Alerts**.
+
+If there's an error message in the console the screen will close unless you enable the **Continue On Error** option in the Web Screen options in Tasker.
