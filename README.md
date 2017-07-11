@@ -71,7 +71,7 @@ You can then update the values on the page how ever you please based on this obj
 
 The **Update** option will only show in the Tasker configuration screen if the **autoToolsUpdateValues()** function is present on the main **Source** page.
 
-#Debugging
+# Debugging
 
 You can use
 ```
