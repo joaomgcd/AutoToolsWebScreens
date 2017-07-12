@@ -204,7 +204,7 @@ AutoTools.objectToElements = function(rootElementsId, rootElementClass, input, i
             return;
         }
         if(!value){
-            hide(element);
+            AutoTools.hide(element);
             return element;
         }
         AutoTools.show(element);
@@ -290,8 +290,41 @@ AutoTools.getUserInfo = () => JSON.parse(AutoToolsAndroid.getUserInfo());
  * Will make your phone vibrate with the given vibration pattern.
  * @param {string} vibration - Vibration Pattern. Same as Tasker's vibrate pattern
  */
-AutoTools.vibrate = (vibration) => JSON.parse(AutoToolsAndroid.vibrate(vibration));
+AutoTools.vibrate = (vibration) => AutoToolsAndroid.vibrate(vibration);
 /**
  * Will make your phone vibrate shortly
  */
-AutoTools.hapticFeedback = () => JSON.parse(AutoToolsAndroid.hapticFeedback());
+AutoTools.hapticFeedback = () => AutoToolsAndroid.hapticFeedback();
+/**
+ * Will change the width of the Web Screen if it's an overlay or a dialog
+ * @param {string} width - in dp or "fill" to fill the entire width of the screen
+ */
+AutoTools.setWidth = (width) => AutoToolsAndroid.setWidth(width);
+/**
+ * Will change the height of the Web Screen if it's an overlay or a dialog
+ * @param {string} height - in dp or "fill" to fill the entire height of the screen
+ */
+AutoTools.setHeight = (width) => AutoToolsAndroid.setHeight(width);
+/**
+ * Will change the size of the Web Screen if it's an overlay or a dialog
+ * @param {string} width - in dp or "fill" to fill the entire width of the screen
+ * @param {string} height - in dp or "fill" to fill the entire height of the screen
+ */
+AutoTools.setSize = (width,height) => AutoToolsAndroid.setSize(width,height);
+
+AutoTools.GRAVITY_BOTTOM = 80;
+AutoTools.GRAVITY_CENTER = 17;
+AutoTools.GRAVITY_TOP = 48;
+AutoTools.GRAVITY_RIGHT = 5;
+AutoTools.GRAVITY_LEFT = 3;
+
+/**
+ * Will change the size of the Web Screen if it's an overlay or a dialog
+ * @param {string} width - in dp or "fill" to fill the entire width of the screen
+ * @param {string} height - in dp or "fill" to fill the entire height of the screen
+ * @param {string} x - offset in dp
+ * @param {string} y - offset in dp
+ * @param {int} gravity - flag for gravity: combination of any of the GRAVITY flags above
+ */
+AutoTools.setLayout = (width, height, x, y, gravity) => AutoToolsAndroid.setLayout(width, height, x, y, gravity);
+
