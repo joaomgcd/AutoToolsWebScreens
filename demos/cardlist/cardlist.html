@@ -9,6 +9,14 @@
 			--md-background-color-dark: #ba1b12;
 		    --md-loading-message-color: #6e6e6e;
 		    --md-toolbar-color: var(--md-background-color);
+		    --search-color: #ffffff;
+		    --search-color-darker: #dddddd;
+		}
+		html, body {
+		  overflow-x: hidden;
+		}
+		body {
+		  position: relative
 		}
 		#topBar{
 			display: flex;
@@ -18,26 +26,32 @@
 		    color: var(--paper-icon-button-ink-color);
   			box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   			z-index: 999;
-  			margin-bottom: 4px;
+		}
+		#topBarContent{
+			display: flex;
+			height: var(--cr-toolbar-height);
+			align-items: center;
+  			z-index: 999;
+  			width: 100%;
 		}
 		#title{
 			margin-left: 16px;			
 		    font-size: 123%;
 		    font-weight: 400;
+		    flex: 1;
 		}
 		#titleicon{
-			height: 40px;
+			height: 32px;
 		}
-		#titleicon img{
+		#titleicon img,#titleicon svg{
 			margin-left: 16px;
-			height: 40px;
+			height: 32px;
 			border-radius: 40px;
 		}
 		#topBarButtons{
 			text-align: right;
-			flex-grow: 1;
 			margin-right: 8px;
-			height: 40px;
+			height: 32px;
 		}
 		#topBarButtons .button{
 		    margin-top: 0px;
@@ -45,15 +59,23 @@
 		    padding: 0px;
 		    padding-right: 8px;
 		    padding-left: 8px;
+			height: 32px;
 		}
 		#topBarButtons .button:hover {
 			transform: translateY(0px);
 			box-shadow: 0px 0px 0px #777;
   		}
 		#topBarButtons .button img{
-			width: 40px;
+			width: 32px;
 			border-radius: 40px;
     		pointer-events: none;
+		}
+		#topBarButtons .button svg{
+			width: 32px;
+		    height: 32px;
+			border-radius: 40px;
+    		pointer-events: none;
+    		fill: var(--search-color);
 		}
 		body {
 			font-family: Roboto, 'Segoe UI', Tahoma, sans-serif;
@@ -152,6 +174,7 @@
 			height: 50px;
 			border-radius: 50px;
 			margin-right: 16px;
+    		object-fit: cover;
     		//align-self: center;
 		}
 		.result .rightbottom{
@@ -185,6 +208,56 @@
 		.green {
 			background-color: var(--md-background-color);
 			border-bottom: 3px solid var(--md-background-color-dark);
+		}
+		#search{
+			margin-left: 8px;
+			flex-grow: 1;
+			display: flex;
+			align-content: center;
+			align-self: center;
+			justify-content: center;
+		}
+		#search svg{
+			fill: var(--search-color);
+			height: 32px;
+			width: 32px;
+			cursor: pointer;
+			align-self: center;
+		}
+		*::-webkit-input-placeholder {
+    		color: var(--search-color-darker);
+		}
+		#searchinput {		
+		    font-size: 123%;
+			display: block;
+			width: 100%;
+			padding: 10px 5px;
+		    background: rgba(0, 0, 0, 0);
+		    border: none;
+		    outline: none;
+    		color: var(--search-color);
+			
+			/*
+			* IMPORTANT PART HERE
+			*/
+			
+		  /* 2 imgs : 1px gray line (normal state) AND 2px green line (focus state) */
+			//background-image: linear-gradient(to bottom, #1abc9c, #1abc9c), linear-gradient(to bottom, silver, silver);
+			/* sizes for the 2 images (default state) */
+			background-size: 0 2px, 100% 1px;
+			/* positions for the 2 images. Change both "50%" to "0%" or "100%" and tri again */
+			background-position: 50% 100%, 50% 100%;
+
+			/* animation solely on background-size */
+		  transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+		  margin-left: 16px;
+
+		}
+
+		#searchinput:focus {
+		  /* sizes for the 2 images (focus state) */
+			background-size: 100% 2px, 100% 1px;
+			outline: none;
 		}
 		@keyframes move {
 			from {
@@ -220,12 +293,105 @@
 		      opacity: 0;
 		    }
 		}
+		#swipedetector{
+			position: fixed;
+			width: 5px;
+			background-color: transparent;
+			height: 100vh;
+		}
+		#drawer{
+			position: fixed;
+			width: 80%;
+			left: -40vh;
+			z-index: 10000;
+			background-color: white;
+			transition: 1s;
+			height: 100vh;
+  			animation: 500ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  			display: flex;
+  			flex-direction: column;
+  			animation-name: drawer_close;
+  			overflow-y: auto;
+		}
+
+		.draweritem{
+			cursor: pointer;
+			display: flex;
+			height: 48px;
+			align-items: center;
+		}
+		.draweritem *{
+			pointer-events: none;
+		}
+		.draweritem .icon{
+			margin-left: 16px;
+			width: 40px
+		}
+		.draweritem .icon img{
+			width: 24px;
+			height: 24px;
+		}
+		.draweritem .label{
+			margin-left: 16px;
+			font-size: 18px;
+    		flex: 1;
+		}
+		#userinfo{
+			padding-top: 24px;
+			padding-left: 16px;
+			height: 124px;
+			color: #ffffff;
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center center; 
+		}
+		#usertext{
+			height: 64px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			font-size: 16px;
+		}
+		#username{
+			
+		}
+		#usernick{
+			font-size: 90%;
+		}
+		#userimage{
+		}
+		#userimage img{
+			border-radius: 5000px;
+			height: 56px;
+			width: 56px;
+		}
+
 	</style>
 	<title>Card List</title>
 	<meta name="autotoolswebscreen" type="variablejs" group="Title" id="titleFromTasker" label="Title" description="Title to show at the top."  hint="YouTube" />
 	<meta name="autotoolswebscreen" type="variablejs" group="Title" id="titleIcon" label="Title Icon" description="Icon to show on the left of the title" isIcon="true" />
 	<meta name="autotoolswebscreen" type="variablejs" group="Title" id="titleButtonIcon" label="Title Buttons Icons" description="List of icons to show on the right of the title, aligned to the right of the screen" isIcons="true" />
 	<meta name="autotoolswebscreen" type="variablejs" group="Title" id="titleButtonCommand" label="Title Button Commands" description="List of commands, one for each title button." />
+	
+	<meta name="autotoolswebscreen" type="variablejs" subtype="boolean" group="Search" id="titleSearch" label="Title Search" description="If enabled, will add a search button on the top right which can filter the cards." />
+	<meta name="autotoolswebscreen" type="variablejs" group="Search" id="titleSearchColor" label="Search Color" description="Set the color of the search icon" isColor="true" defaultValue="#ffffff" />
+	<meta name="autotoolswebscreen" type="variablejs" subtype="boolean" group="Search" id="searchShouldFilter" label="Filter With Search" description="Enable to make the cards be filtered by what you search for"  defaultValue="true" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Search" id="titleSearchCommandPrefix" label="Command Prefix" description="Set the prefix for when search is submitted" defaultValue="search" />
+
+	<meta name="autotoolswebscreen" type="variablejs" subtype="boolean" group="Navigation Drawer" id="drawerEnable" label="Enable Drawer" description="If enabled and not title icon is set, will use the hamburger icon by default" />	
+	<meta name="autotoolswebscreen" type="variablejs" group="Navigation Drawer" id="drawerItemLabel" label="Item Labels" description="List of items to add to the drawer" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Navigation Drawer" id="drawerItemIcon" label="Item Icons" description="List of icons for the drawer items" isIcons="true" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Navigation Drawer" id="drawerItemCommand" label="Item Commands" description="List of commands, one for each label" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Navigation Drawer" id="drawerItemCommandPrefix" label="Commands Prefix"  description="If set will attach 'prefix=:=' to each command on the list" />
+	<meta name="autotoolswebscreen" type="variablejs" subtype="boolean" group="Navigation Drawer" id="drawerShowUser" label="Show User" description="If enabled, will show user info in the drawer. You can override pieces of it with the values below." />
+	<meta name="autotoolswebscreen" type="variablejs" group="Navigation Drawer" id="drawerCover" label="Cover" description="Background for the top section in the drawer" isImage="true" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Navigation Drawer" id="drawerCoverColor" label="Cover Color" description="Instead of an image you can set a color as the background" isColor="true" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Navigation Drawer" id="drawerIcon" label="Icon" description="Icon for the top section in the drawer" isIcon="true" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Navigation Drawer" id="drawerTitle" label="Title" description="Title for the top section in the drawer" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Navigation Drawer" id="drawerSubtitle" label="Subtitle" description="Subtitle for the top section in the drawer" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Navigation Drawer" id="drawerCommand" label="Cover Command" description="AutoApps Command to be sent when clicking the top section in the drawer." />
+	<meta name="autotoolswebscreen" type="variablejs" group="Navigation Drawer" id="drawerWidth" label="Drawer Width" description="If no unit used, assumed to be pixels. Can use % to specify width related to the screen size" defaultValue="80%" />
+
 	<meta name="autotoolswebscreen" type="variablejs" group="Cards" id="cardTitle" label="Card Titles" description="List of titles, one for each card" />
 	<meta name="autotoolswebscreen" type="variablejs" group="Cards" id="cardTitleRight" label="Card Subtitle" description="List of subtitles, one for each card. Appear on the right of the title, aligned to the right" />
 	<meta name="autotoolswebscreen" type="variablejs" group="Cards" id="cardSubtextLeft" label="Card Subtext Left" description="List of texts to appear below the title, on the left, one for each card" />
@@ -237,15 +403,20 @@
 	<meta name="autotoolswebscreen" type="variablejs" group="Card Buttons" id="cardButton" label="Card Buttons" description="List of Button Labels that should appear on each card" />
 	<meta name="autotoolswebscreen" type="variablejs" group="Card Buttons" id="buttonCommand" label="Button Commands" description="List of commands, one for each button. Will add as a sufix to each card command." />
 	<meta name="autotoolswebscreen" type="variablejs" group="Colors" id="backgroundColor" label="Background Color" description="Background Color for the screen" isColor="true" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Colors" id="cardBackgroundColor" label="Card Background Color" description="Background Color for the cards" isColor="true"> 
 	<meta name="autotoolswebscreen" type="variablejs" group="Colors" id="accentColor" label="Accent Color" description="Accent Color for the screen" isColor="true"/>
+
 	<meta name="autotoolswebscreen" type="variablejs" group="Layout" id="maxWidth" label="Max Card Width" description="Set the max width of the cards in either % or absolute value" hint="ie. 100% or 300" defaultValue="100%"/>
 	<meta name="autotoolswebscreen" type="variablejs" group="Layout" id="minWidth" label="Min Card Width" description="Set the min width of the cards in either % or absolute value" hint="ie. 30% or 150" />
-	<meta name="autotoolswebscreen" type="variablejs" group="Layout" id="maxHeight" label="Max Image Height" description="Set the max height of the images in the cards in pixels" hint="350" defaultValue="350"/>
+	<meta name="autotoolswebscreen" type="variablejs" group="Layout" id="maxHeight" label="Max Image Height" description="Set the max height of the images in the cards in pixels. This will control the height of the cards." hint="350" defaultValue="350"/>
 	<meta name="autotoolswebscreen" type="variablejs" group="Layout" id="titleTextSize" label="Title Text Size" description="Set the size of the text for the title" hint="22" defaultValue="22"/>
+	<meta name="autotoolswebscreen" type="variablejs" group="Layout" id="subtitleTextSize" label="Subtitle Text Size" description="Set the size of the text for the subtitle" hint="22" defaultValue="22"/>
 	<meta name="autotoolswebscreen" type="variablejs" group="Layout" id="cardPadding" label="Card Padding" description="Set the padding inside the card" hint="24" defaultValue="24"/>
 	<meta name="autotoolswebscreen" type="variablejs" group="Layout" id="cardAlign" label="Card Alignment" description="Define how the cards align vertically"  options="Top,Center,Bottom" defaultValue="Center" />
+	
 	<meta name="autotoolswebscreen" type="variablejs" group="Other" id="itemSeparator" label="Item Separator" description="Set which characters separates each item in the various lists" hint="," defaultValue=","/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
 </head>
 <body>
 
@@ -271,56 +442,514 @@
 	<div class="topBarButton button hidden">
 		<img />
 	</div>
+	<div id="swipedetector">
+	</div>
+	<div id="drawer" class="hidden">
+		<div id="userinfo" class="hidden">
+			<div id="userimage"><img /></div>
+			<div id="usertext">
+				<div id="username"></div>
+				<div id="usernick"></div>
+			</div>
+		</div>
+		<div id="draweritems"></div>
+	</div>
+	<div class="draweritem hidden">
+		<div class="icon"><img /></div>
+		<div class="label"></div>
+	</div>
 	<div id="content">
 		<div id="topBar" class="hidden">
-			<div id="titleicon" class="hidden"><img /></div>
-			<div id="title">Hello</div>
-			<div id="topBarButtons"></div>
+			<div id="search" class="hidden"><svg id="searchBackButton" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg><input type="text" id="searchinput" placeholder="Search" /></div>
+			<div id="topBarContent">
+				<div id="titleicon" class="hidden"><img /><svg id="defaultTitleIcon" class="hidden" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg></div>
+				<div id="title">Hello</div>
+				<div id="topBarButtons">
+					<div class="topBarButton button hidden" id="buttonsearch">
+						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div id="results"></div>
 	</div>
 	<script type="text/javascript">
+
+		if(!window["AutoTools"]){
+			var AutoTools = {};
+		}
+		AutoTools.sendCommand = function(command, prefix, hapticFeedback){
+		    if(!command){
+		        return;
+		    }
+		    if(!prefix){
+		        prefix = null;
+		    }
+		    console.log("Sending command: " + command+";"+prefix);
+		    AutoToolsAndroid.sendCommand(command, prefix, hapticFeedback);
+		}
+		AutoTools.shadeBlendConvert = function(p, from, to) {
+		    if(typeof(p)!="number"||p<-1||p>1||typeof(from)!="string"||(from[0]!='r'&&from[0]!='#')||(typeof(to)!="string"&&typeof(to)!="undefined"))return null;
+		    var sbcRip=function(d){
+		        var l=d.length,RGB=new Object();
+		        if(l>9){
+		            d=d.split(",");
+		            if(d.length<3||d.length>4)return null;
+		            RGB[0]=i(d[0].slice(4)),RGB[1]=i(d[1]),RGB[2]=i(d[2]),RGB[3]=d[3]?parseFloat(d[3]):-1;
+		        }else{
+		            if(l==8||l==6||l<4)return null;
+		            if(l<6)d="#"+d[1]+d[1]+d[2]+d[2]+d[3]+d[3]+(l>4?d[4]+""+d[4]:"");
+		            d=i(d.slice(1),16),RGB[0]=d>>16&255,RGB[1]=d>>8&255,RGB[2]=d&255,RGB[3]=l==9||l==5?r(((d>>24&255)/255)*10000)/10000:-1;
+		        }
+		        return RGB;}
+		    var i=parseInt,r=Math.round,h=from.length>9,h=typeof(to)=="string"?to.length>9?true:to=="c"?!h:false:h,b=p<0,p=b?p*-1:p,to=to&&to!="c"?to:b?"#000000":"#FFFFFF",f=sbcRip(from),t=sbcRip(to);
+		    if(!f||!t)return null;
+		    if(h)return "rgb("+r((t[0]-f[0])*p+f[0])+","+r((t[1]-f[1])*p+f[1])+","+r((t[2]-f[2])*p+f[2])+(f[3]<0&&t[3]<0?")":","+(f[3]>-1&&t[3]>-1?r(((t[3]-f[3])*p+f[3])*10000)/10000:t[3]<0?f[3]:t[3])+")");
+		    else return "#"+(0x100000000+(f[3]>-1&&t[3]>-1?r(((t[3]-f[3])*p+f[3])*255):t[3]>-1?r(t[3]*255):f[3]>-1?r(f[3]*255):255)*0x1000000+r((t[0]-f[0])*p+f[0])*0x10000+r((t[1]-f[1])*p+f[1])*0x100+r((t[2]-f[2])*p+f[2])).toString(16).slice(f[3]>-1||t[3]>-1?1:3);
+		};
+		AutoTools.increaseBrightnessRule = function(rule, propertyName, percent, darken){
+			var originalColor = rule.style.getPropertyValue(propertyName);
+			if(!originalColor){
+				return;
+			}
+			originalColor = originalColor.trim();
+			var newColor = AutoTools.shadeBlendConvert(percent/100,originalColor);
+			rule.style.setProperty(propertyName, newColor);
+			return newColor;
+		};
+
+		AutoTools.isSet = value => {
+			value = window[value];
+			if(!value){
+				return false;
+			}
+			var toClass = {}.toString.call(value);
+			if(toClass  == "[object Boolean]"){
+				return value;
+			}
+			return toClass  == "[object String]"; 
+		};
+		AutoTools.fieldsToObject = (...fields) => {
+			var first =  fields[0];
+			var result = [];
+			/*if(!AutoTools.isSet(first)){
+				return result;
+			}*/
+			var length = null;
+			var separator = ",";
+			if(AutoTools.isSet("itemSeparator")){
+				separator =  itemSeparator;
+			}
+			for(var field of fields){
+				if(!AutoTools.isSet(field)){
+					continue;
+				}
+				var value = window[field];
+				var split = value.split(separator);
+				if(length == null){
+					length = split.length;
+				}
+				for (var i = 0; i < length; i++) {
+					if(result.length<=i){
+						result.push({});
+					}
+					var current = result[i];
+					current[field] = split[i];
+				}
+			}
+			return result;
+		};
+
 		
 		/*var cardButtons = "Chrome Grande";
 		//var cardTitle = "One,Two";
-		//var cardTitle = "One|Two|Three|Four|Five|Six|Seven";
-		//var cardTitleRight = "1|2|3|4";
-		var cardCommand = "1,2,3,4,5";
+		var cardTitle = "One|Two|Three|Four|Five|Six|Seven";
+		var cardTitleRight = "1|2|3|4";
+		var cardCommand = "1|2|3|4|5";
 		var cardCommandPrefix = "test";
-		//var cardSubtextLeft = "1,2";
-		//var cardSubtextRight = "right";
+		var cardSubtextLeft = "1,2";
+		var cardSubtextRight = "right";
 		//var titleIcon = "https://help.geogebra.org/public/attachments/6b999afc674ff37e10b4bf753c56c88a.png"; 
-		//var cardIcon = "https://www.wired.com/images_blogs/gadgetlab/2010/09/enhanced-buzz-27651-1283950556-2.jpg";
+		var cardIcon = "http://www.magazine-hd.com/apps/wp/wp-content/uploads/2016/11/Vaiana-poster.jpg|https://www.wired.com/images_blogs/gadgetlab/2010/09/enhanced-buzz-27651-1283950556-2.jpg";
 		var cardImage = "http://www.magazine-hd.com/apps/wp/wp-content/uploads/2016/11/Vaiana-poster.jpg|http://img.youtube.com/vi/0-JHq2wjB9c/mqdefault.jpg|https://thumbs.dreamstime.com/z/ferrari-show-day-super-wide-angle-01-14344459.jpg|https://s-media-cache-ak0.pinimg.com/736x/af/99/70/af99702a93bc7868a6e455358af764af.jpg";
-		var titleButtonIcon = "https://help.geogebra.org/public/attachments/6b999afc674ff37e10b4bf753c56c88a.png|https://www.wired.com/images_blogs/gadgetlab/2010/09/enhanced-buzz-27651-1283950556-2.jpg";
+		var titleButtonIcon = "https://help.geogebra.org/public/attachments/6b999afc674ff37e10b4bf753c56c88a.png|https://www.wired.com/images_blogs/gadgetlab/2010/09/enhanced-buzz-27651-1283950556-2.jpg|https://help.geogebra.org/public/attachments/6b999afc674ff37e10b4bf753c56c88a.png|https://www.wired.com/images_blogs/gadgetlab/2010/09/enhanced-buzz-27651-1283950556-2.jpg";
 		var titleButtonCommand = "title button|onter";
-		//var cardButton = "Play"; 
-		//var buttonCommand = "pppp";
-		var titleFromTasker = "Super Card List";
+		var cardButton = "Play"; 
+		var buttonCommand = "pppp";
+		var titleFromTasker = "Super Card List with a big title";
 		//var maxWidth = "100%";
 	    var minWidth = "30%";
 		var maxHeight = "550";
 		//var autoWidth = true;
 		//var accentColor = "#43A047";
 		var titleTextSize = "12";
+		//var subtitleTextSize = "42";
 		var cardPadding = "0";
 		var cardAlign = "Center";
 		var itemSeparator = "|";
-		var backgroundColor = "#00ffff00";*/
+		//var backgroundColor = "#00ffff00";
+		var titleSearch = false;
+		var titleSearchCommandPrefix = "search";
+		var searchShouldFilter = true;
+		//var titleSearchColor = "#ffffff";
+		var drawerEnable = true;
+		var drawerItemIcon = titleButtonIcon;
+		var drawerItemLabel = "Item 1|Item 2 super big text oh yeah baby|Item 3|Item 2|Item 3|Item 2|Item 3|Item 2|Item 3|Item 2|Item 3|Item 2|Item 3|Item 2|Item 3";
+		//var drawerItemCommand = "Command 1|Command 2";
+		var drawerItemCommandPrefix = "drawer";
+		//var drawerShowUser = true;
+		//var drawerCover = "http://www.magazine-hd.com/apps/wp/wp-content/uploads/2016/11/Vaiana-poster.jpg";
+		var drawerCoverColor = "#ffff00";
+		var drawerIcon = "https://help.geogebra.org/public/attachments/6b999afc674ff37e10b4bf753c56c88a.png";
+		var drawerTitle = "Super Movie!!";
+		var drawerSubtitle = "...mega movie...";
+		var drawerCommand = "Super Movie!!";
+		var drawerWidth = "60%";
+
+		var userInformation = {
+ "kind": "plus#person",
+ "nickname": "joaomgcd",
+ "gender": "male",
+ "emails": [
+  {
+   "type": "account"
+  }
+ ],
+ "urls": [
+  {
+   "value": "http://picasaweb.google.pt/joaomgcd",
+   "type": "otherProfile",
+   "label": "Picasa Web Albums"
+  },
+  {
+   "value": "http://twitter.com/joaomgcd",
+   "type": "otherProfile",
+   "label": "joaomgcd"
+  }
+ ],
+ "objectType": "person",
+ "id": "101282964483894346750",
+ "displayName": "João Dias (joaomgcd)",
+ "name": {
+  "familyName": "Dias",
+  "givenName": "João"
+ },
+ "url": "https://plus.google.com/+JoãoDias",
+ "image": {
+  "url": "https://lh6.googleusercontent.com/-pBTqkVlB_yM/AAAAAAAAAAI/AAAAAAACBJU/rhUhuApUc7Q/photo.jpg?sz=50",
+  "isDefault": false
+ },
+ "isPlusUser": true,
+ "language": "en",
+ "ageRange": {
+  "min": 21
+ },
+ "circledByCount": 3483,
+ "verified": false,
+ "cover": {
+  "layout": "banner",
+  "coverPhoto": {
+   "url": "https://lh3.googleusercontent.com/QR4QQ0sUW-euw83RtgyESZSx9R-ErGdARQ5TmeGNURhVKN6IBzzXmy-52o5tEPTw2wTqEMiLSOR0Zw=s630-fcrop64=1,0000319eff92f1e6",
+   "height": 705,
+   "width": 940
+  },
+  "coverInfo": {
+   "topImageOffset": 0,
+   "leftImageOffset": 0
+  }
+ }
+};
+AutoTools.getUserInfo = () => userInformation;*/
+
+
+
+		function swipedetect(el, callback){
+		  
+		    var touchsurface = el,
+		    swipedir,
+		    startX,
+		    startY,
+		    distX,
+		    distY,
+		    threshold = 50, //required min distance traveled to be considered swipe
+		    restraint = 100, // maximum distance allowed at the same time in perpendicular direction
+		    allowedTime = 300, // maximum time allowed to travel that distance
+		    elapsedTime,
+		    startTime,
+		    handleswipe = callback || function(swipedir){}
+		  
+		    touchsurface.addEventListener('touchstart', function(e){
+		        var touchobj = e.changedTouches[0]
+		        swipedir = 'none'
+		        dist = 0
+		        startX = touchobj.pageX
+		        startY = touchobj.pageY
+		        startTime = new Date().getTime() // record time when finger first makes contact with surface
+		        //e.preventDefault()
+		    }, false)
+		  
+		    touchsurface.addEventListener('touchend', function(e){
+		        var touchobj = e.changedTouches[0]
+		        distX = touchobj.pageX - startX // get horizontal dist traveled by finger while in contact with surface
+		        distY = touchobj.pageY - startY // get vertical dist traveled by finger while in contact with surface
+		        elapsedTime = new Date().getTime() - startTime // get time elapsed
+		        if (elapsedTime <= allowedTime){ // first condition for awipe met
+		            if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
+		                swipedir = (distX < 0)? 'Left' : 'Right' // if dist traveled is negative, it indicates left swipe
+		            }
+		            else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint){ // 2nd condition for vertical swipe met
+		                swipedir = (distY < 0)? 'Up' : 'Down' // if dist traveled is negative, it indicates up swipe
+		            }
+		        }
+		        handleswipe(swipedir)
+		        //e.preventDefault()
+		    }, false)
+		}
+		var showError = error => document.write(error);
+		var hide = element => element.classList.add("hidden");
+		var show = element => element.classList.remove("hidden");
+		var toggleShow = element => element.classList.toggle("hidden");
+
+		var findRootRule = ()  => {
+			for(var sheet of document.styleSheets){
+				if(sheet.cssRules[0].selectorText == ":root"){
+					return sheet.cssRules[0];
+				}
+			}
+		}
 		var inputFromTasker = AutoTools.fieldsToObject("cardTitle","cardTitleRight","cardSubtextLeft","cardSubtextRight","cardIcon","cardImage", "cardCommand", "cardCommandPrefix");
-	
+		var closeDrawer = () => {
+				if(drawerElement.style.webkitAnimationName == "drawer_open"){
+					show(drawerElement);
+	            	drawerElement.style.webkitAnimationName ="drawer_close";	
+				}
+		}
+		var openDrawer = () => {
+				show(drawerElement);
+	            drawerElement.style.webkitAnimationName ="drawer_open";
+		}
+		var toggleDrawer = () => {
+			 if(drawerElement.style.webkitAnimationName == "drawer_open"){
+			 	closeDrawer();
+	        }else{
+	            openDrawer();
+	        }
+			/*if(drawerElement.classList.contains("closed")){
+				show(drawerWrapperElement);	
+			}else{
+				setTimeout(()=>{
+					if(drawerElement.classList.contains("closed")){
+						hide(drawerWrapperElement);	
+					}
+				},1000);
+			}
+			drawerElement.classList.toggle("closed");*/
+		}
+		var titleIconWrapper = document.querySelector("#titleicon");
+		var drawerElement = document.querySelector("#drawer");
+		var drawerItemsElement = document.querySelector("#draweritems");
+		var swipeDetectElement = document.querySelector("#swipedetector");
+		if(AutoTools.isSet("drawerEnable") && drawerEnable){
+			swipedetect(drawerElement,type=>{
+				if(type=="Left"){
+					closeDrawer();
+				}
+			});
+			swipedetect(swipeDetectElement,direction=>direction == "Right" ? openDrawer() : null);
+			var shouldShowUser = false;
+			var shouldGetUserInfo = false;
+			if(AutoTools.isSet("drawerShowUser") && drawerShowUser){
+				shouldShowUser = true;
+				shouldGetUserInfo = true;
+			}
+			if(!AutoTools.isSet("drawerCover")){
+				drawerCover = null;
+			}
+			if(!AutoTools.isSet("drawerCoverColor")){
+				drawerCoverColor = null;
+			}
+			if(!AutoTools.isSet("drawerIcon")){
+				drawerIcon = null;
+			}
+			if(!AutoTools.isSet("drawerTitle")){
+				drawerTitle = null;
+			}
+			if(!AutoTools.isSet("drawerSubtitle")){
+				drawerSubtitle = null;
+			}
+			if(!AutoTools.isSet("drawerCommand")){
+				drawerCommand = null;
+			}
+			if(!AutoTools.isSet("drawerWidth")){
+				drawerWidth = "80%";
+			}
+			if(!isNaN(new Number(drawerWidth))){
+				drawerWidth = drawerWidth+"px";
+			}
+			drawerWidth = drawerWidth.replace("%","vw");
+			var animationSheet = document.createElement('style');
+			animationSheet.innerHTML = `
+			@keyframes drawer_open {
+			  from {
+			    transform: translate(0px, 0px);
+			  }
+			  to {
+			  	transform: translate(${drawerWidth}, 0px);
+			  }
+			}
+			@keyframes drawer_close {
+			  from {
+			    transform: translate(${drawerWidth}, 0px);
+			  }
+			  to {
+			  	transform: translate(0px, 0px);
+			  }
+			}`;
+			document.head.appendChild(animationSheet);
+			drawerElement.style["width"] = drawerWidth;
+			drawerElement.style["left"] = "-"+drawerWidth;
+			var testDrawerValue = value => value ? true : false;
+			shouldShowUser |= testDrawerValue(drawerCover) || testDrawerValue(drawerCoverColor) || testDrawerValue(drawerIcon) || testDrawerValue(drawerTitle) || testDrawerValue(drawerSubtitle);
+			var userInfoElement = document.querySelector("#userinfo");
+			if(shouldShowUser){
+				var userInfoLocal = null;
+				var getUserInfo = () => {
+					if(!userInfoLocal && shouldGetUserInfo){
+						userInfoLocal = AutoTools.getUserInfo();
+					}
+					return userInfoLocal;
+				}
+				var getValueForDrawer = (drawerValue,fromUserInfo) => {
+					try{
+						return drawerValue ? drawerValue : (userInfo ? fromUserInfo(userInfo) : null);
+					}catch(e){
+						return null;
+					}
+				}
+				var propOrHide = (elementQuery,prop,drawerValue,fromUserInfo) =>{
+					var value = getValueForDrawer(drawerValue,fromUserInfo);
+					var element = userInfoElement.querySelector(elementQuery);
+					if(value){
+						element[prop] = value;
+					}else{
+						hide(element);
+					}
+				}
+				var srcOrHide = (elementQuery,drawerValue,fromUserInfo) =>{
+					propOrHide(elementQuery,"src",drawerValue,fromUserInfo);
+				}
+				var innerHtmlOrHide = (elementQuery,drawerValue,fromUserInfo) =>{
+					propOrHide(elementQuery,"innerHTML",drawerValue,fromUserInfo);
+				}
+				var userInfo = getUserInfo();
+				show(userInfoElement);
+
+				var coverImage = getValueForDrawer(drawerCover, userInfo=> userInfo.cover.coverPhoto.url);
+				if(coverImage){
+					userInfoElement.style.backgroundImage = `url('${coverImage}')`;	
+				}else{
+					userInfoElement.style["background-color"] = drawerCoverColor;
+				}
+				srcOrHide("#userimage img", drawerIcon, userInfo=> userInfo.image.url);
+				innerHtmlOrHide("#username", drawerTitle, userInfo=> userInfo.name.givenName + " " + userInfo.name.familyName);
+				innerHtmlOrHide("#usernick", drawerSubtitle, userInfo=> userInfo.nickname);
+				if(drawerCommand){
+					userInfoElement.onclick = e => AutoTools.sendCommand(drawerCommand);
+				}
+			}else{				
+				hide(userInfoElement);
+			}
+			drawerItemsElement.innerHTML = "";
+			var drawerItemElementBase = document.querySelector(".draweritem").cloneNode(true);
+			show(drawerItemElementBase);
+			var drawerItems = AutoTools.fieldsToObject("drawerItemLabel","drawerItemIcon","drawerItemCommand");
+			var drawerItemCount =  0;
+			if(!AutoTools.isSet("drawerItemCommandPrefix")){
+				var drawerItemCommandPrefix = "";
+			}
+			for(var drawerItem of drawerItems){
+				var drawerItemElement = drawerItemElementBase.cloneNode(true);
+				if(!drawerItem.drawerItemCommand){
+					drawerItem.drawerItemCommand = drawerItem.drawerItemLabel;
+				}
+				drawerItemElement.item = drawerItem;
+				drawerItemElement.querySelector(".label").innerHTML = drawerItem.drawerItemLabel;
+				var iconImage = drawerItem.drawerItemIcon;
+				var iconElement = drawerItemElement.querySelector(".icon img");
+				if(iconImage){
+					iconElement.src = iconImage;						
+				}else{
+					hide(iconElement);
+				}
+				drawerItemElement.onclick = e => AutoTools.sendCommand(e.target.item.drawerItemCommand,drawerItemCommandPrefix);
+				if(drawerItemCount == 0 && !shouldShowUser){
+					drawerItemElement.style["margin-top"] = "var(--cr-toolbar-height)";
+				}
+				drawerItemsElement.appendChild(drawerItemElement);
+				drawerItemCount++;
+			}
+			document.querySelector("#content").onclick = e => closeDrawer();
+			var iconForDrawer = null;
+			if(!AutoTools.isSet("titleIcon")){
+				iconForDrawer = document.querySelector("#defaultTitleIcon"); 
+				show(iconForDrawer);
+			}else{
+				iconForDrawer = document.querySelector("#titleIcon");
+			}
+			titleIconWrapper.style["cursor"] = "pointer";
+			titleIconWrapper.onclick = e => {e.stopPropagation(); openDrawer();}
+			show(titleIconWrapper);
+		}else{
+			hide(swipeDetectElement);	
+		}
 		
 		inputFromTasker.cardButtons = AutoTools.fieldsToObject("cardButton","buttonCommand");
+		if(!AutoTools.isSet("titleSearch")){
+			titleSearch = false;
+		}
+		if(!AutoTools.isSet("titleSearchCommandPrefix")){
+			titleSearchCommandPrefix = null;
+		}
+		if(!AutoTools.isSet("searchShouldFilter")){
+			searchShouldFilter = false;
+		}
+		if(!AutoTools.isSet("titleSearchColor")){
+			titleSearchColor = "#ffffff";
+		}
+		if(titleSearch){
+			var searchButton = document.querySelector("#buttonsearch");
+			var searchInput = document.querySelector("#searchinput");
+			show(searchButton);
+			var rootRule = findRootRule();
+			rootRule.style.setProperty("--search-color",titleSearchColor);
+			rootRule.style.setProperty("--search-color-darker",AutoTools.shadeBlendConvert(-0.2, titleSearchColor));
+			var topBarContent = document.querySelector("#topBarContent");
+			var searchElement = document.querySelector("#search");
+			searchButton.onclick = e => {
+				var searchInputElement = document.querySelector("#searchinput");
+				show(searchElement);
+				searchInputElement.focus();	
+				hide(topBarContent);
+			}
+			var searchBackButton = document.querySelector("#searchBackButton");
+			searchBackButton.onclick = e =>{
+				show(topBarContent);
+				hide(searchElement);
+			}
+
+			searchInput.onkeyup = e => {
+				var currentSearch = searchInput.value.toLowerCase();
+				if(e.keyCode == 13){
+					AutoTools.sendCommand(currentSearch,titleSearchCommandPrefix);
+				}
+				if(searchShouldFilter){
+					displayCards(currentSearch,true);						
+				}
+			};
+		}
 		inputFromTasker.titleButtons = AutoTools.fieldsToObject("titleButtonIcon","titleButtonCommand");
 		console.log(inputFromTasker);
 		if(AutoTools.isSet("accentColor")){
-			var findRootRule = ()  => {
-				for(var sheet of document.styleSheets){
-					if(sheet.cssRules[0].selectorText == ":root"){
-						return sheet.cssRules[0];
-					}
-				}
-			}
 			var rootRule = findRootRule();
 			rootRule.style.setProperty("--md-background-color",accentColor);
 			var dark = AutoTools.shadeBlendConvert(-0.2, accentColor);
@@ -328,9 +957,6 @@
 		}
 		
 
-		var showError = error => document.write(error);
-		var hide = element => element.classList.add("hidden");
-		var show = element => element.classList.remove("hidden");
 		
 		var titleElement = document.querySelector("#title");
 		if(AutoTools.isSet("titleFromTasker")){
@@ -367,16 +993,112 @@
 			element.style[prop] = value;
 			return true;
 		};
+		var isCardBackgroundColorSet = AutoTools.isSet("cardBackgroundColor");
+		var count = 0;
+		var matchesFilter = function(matches, value, filter){
+			if(matches){
+				return true;
+			}
+			if(!value){
+				return false;
+			}
+			if(!filter){
+				return true;
+			}
+			return value.toLowerCase().indexOf(filter) >= 0;
+		}
+		if(!AutoTools.isSet("titleTextSize")){
+			var titleTextSize = "22";
+		}
+		if(!AutoTools.isSet("subtitleTextSize")){
+			var subtitleTextSize = titleTextSize;
+		}
+		var displayCards = function(filter,showRightAway){
+			resultsElement.innerHTML = "";
+			count = 0;
+			for(var item of inputFromTasker){
+				if(filter){
+					var matches = false;
+					matches |= matchesFilter(matches, item.cardTitle, filter);
+					matches |= matchesFilter(matches, item.cardTitleRight, filter);
+					matches |= matchesFilter(matches, item.cardSubtextLeft, filter);
+					matches |= matchesFilter(matches, item.cardSubtextRight, filter);
+					if(!matches){
+						continue;
+					}
+				}
+				var resultElement = resultElementBase.cloneNode(true);
+				if(showRightAway){
+					resultElement.classList.remove("invisible");
+				}
+				
+				if(setNumberStyleProp(resultElement, "minWidth", "min-width")){
+					resultElement.style["width"] = "auto";
+				}
+				setNumberStyleProp(resultElement, "maxWidth", "max-width");
+				setNumberStyleProp(resultElement, "cardPadding", "padding");
+				setNumberStyleProp(resultElement.querySelector(".title"), "titleTextSize", "font-size");
+				setNumberStyleProp(resultElement.querySelector(".titleright"), "subtitleTextSize", "font-size");
+				if(isCardBackgroundColorSet){
+					resultElement.style["background"] = cardBackgroundColor;
+				}
+				resultElement.item = item;
+				if(!item.cardTitle && !item.cardTitleRight && !item.cardSubtextLeft && !item.cardSubtextRight){
+					hide(resultElement.querySelector(".bottom"))
+				}
+				setByClass(resultElement,"title",item.cardTitle);
+				setByClass(resultElement,"titleright",item.cardTitleRight);
+				if(setByClass(resultElement,"thumbnail",item.cardImage,"src")){
+					setNumberStyleProp(resultElement.querySelector(".thumbnail"), "maxHeight", "max-height");
+				}else{
+					hide(resultElement.querySelector(".thumbnailWrapper"));
+				}
+
+				setByClass(resultElement,"cardicon",item.cardIcon,"src");
+				var subTextLeft = item.cardSubtextLeft;
+				var subTextRight = item.cardSubtextRight;
+				setByClass(resultElement,"subTextLeft",subTextLeft);
+				setByClass(resultElement,"subTextRight",subTextRight);
+				if(!subTextLeft && !subTextRight){
+					hide(resultElement.querySelector(".rightbottom"));
+				}else if(!subTextRight){
+					hide(resultElement.querySelector(".subTextSeparator"));
+				}
+				resultElement.onclick = e => AutoTools.sendCommand(getCommand(e, true));			
+				var buttonsElement = resultElement.querySelector(".buttons");
+				if(inputFromTasker.cardButtons && inputFromTasker.cardButtons.length > 0){
+					for(var cardButton of inputFromTasker.cardButtons){
+						if(!cardButton.cardButton){
+							continue;
+						}
+						var buttonElement = buttonBase.cloneNode(true);
+						buttonElement.classList.add("green");
+						buttonElement.item = item;
+						buttonElement.cardButton = cardButton;
+						buttonElement.innerHTML = cardButton.cardButton;
+						buttonElement.onclick = e => AutoTools.sendCommand(getCommand(e, true));
+						buttonsElement.appendChild(buttonElement);
+					}	
+				}else{
+					hide(buttonsElement);
+				}
+				resultElement.tabIndex = count;
+				resultsElement.appendChild(resultElement);
+				count++;
+			}
+		}
+		var resultElementBase = document.querySelector(".result").cloneNode(true);
+		var resultsElement = document.querySelector("#results");
+		var buttonBase = document.querySelector(".button").cloneNode(true);
 		var displayResults = async function(){		
-			var resultElementBase = document.querySelector(".result").cloneNode(true);
 			show(resultElementBase);
-			var buttonBase = document.querySelector(".button").cloneNode(true);
 			show(buttonBase);
-			var resultsElement = document.querySelector("#results");
+			var titleImage = titleIconWrapper.querySelector("img");
 			if(AutoTools.isSet("titleIcon")){
-				var titleIconWrapper = document.querySelector("#titleicon");
-				titleIconWrapper.querySelector("img").src = titleIcon;
+				titleImage.src = titleIcon;
 				show(titleIconWrapper);
+			}else{
+				hide(titleImage);
 			}
 			if(AutoTools.isSet("cardAlign")){
 				var alignValue = null;
@@ -409,60 +1131,7 @@
 					topBarButtonsElement.appendChild(newButton);
 				}
 			}
-			for(var item of inputFromTasker){
-
-				var resultElement = resultElementBase.cloneNode(true);
-				
-				if(setNumberStyleProp(resultElement, "minWidth", "min-width")){
-					resultElement.style["width"] = "auto";
-				}
-				setNumberStyleProp(resultElement, "maxWidth", "max-width");
-				setNumberStyleProp(resultElement, "cardPadding", "padding");
-				setNumberStyleProp(resultElement.querySelector(".title"), "titleTextSize", "font-size");
-				setNumberStyleProp(resultElement.querySelector(".titleright"), "titleTextSize", "font-size");
-
-				resultElement.item = item;
-				if(!item.cardTitle && !item.cardTitleRight && !item.cardSubtextLeft && !item.cardSubtextRight){
-					hide(resultElement.querySelector(".bottom"))
-				}
-				setByClass(resultElement,"title",item.cardTitle);
-				setByClass(resultElement,"titleright",item.cardTitleRight);
-				if(setByClass(resultElement,"thumbnail",item.cardImage,"src")){
-					setNumberStyleProp(resultElement.querySelector(".thumbnail"), "maxHeight", "max-height");
-				}else{
-					hide(resultElement.querySelector(".thumbnailWrapper"));
-				}
-
-				setByClass(resultElement,"cardicon",item.cardIcon,"src");
-				var subTextLeft = item.cardSubtextLeft;
-				var subTextRight = item.cardSubtextRight;
-				setByClass(resultElement,"subTextLeft",subTextLeft);
-				setByClass(resultElement,"subTextRight",subTextRight);
-				if(!subTextLeft && !subTextRight){
-					hide(resultElement.querySelector(".rightbottom"));
-				}else if(!subTextRight){
-					hide(resultElement.querySelector(".subTextSeparator"));
-				}
-				resultElement.onclick = e => AutoTools.sendCommand(getCommand(e));			
-				var buttonsElement = resultElement.querySelector(".buttons");
-				if(inputFromTasker.cardButtons && inputFromTasker.cardButtons.length > 0){
-					for(var cardButton of inputFromTasker.cardButtons){
-						if(!cardButton.cardButton){
-							continue;
-						}
-						var buttonElement = buttonBase.cloneNode(true);
-						buttonElement.classList.add("green");
-						buttonElement.item = item;
-						buttonElement.cardButton = cardButton;
-						buttonElement.innerHTML = cardButton.cardButton;
-						buttonElement.onclick = e => AutoTools.sendCommand(getCommand(e));
-						buttonsElement.appendChild(buttonElement);
-					}	
-				}else{
-					hide(buttonsElement);
-				}
-				resultsElement.appendChild(resultElement);
-			}
+			displayCards();
 			var showResultElement = element => {
 				setTimeout(()=>{
 					element.classList.add("animated");
@@ -474,9 +1143,11 @@
 				showResultElement(resultElement);
 			}
 		};
-		var getCommand = e =>{
+		var getCommand = (e,shouldCloseDrawer) =>{
 			e.stopPropagation();
-
+			if(shouldCloseDrawer){
+				closeDrawer();
+			}
 			/*var rippleEffectElement = document.createElement("div");
 			rippleEffectElement.classList.add("ripple-effect");
 			rippleEffectElement.style.top =(-e.target.clientHeight/2+e.offsetY) + "px";
