@@ -84,14 +84,14 @@ AutoTools.increaseBrightnessRule = function(rule, propertyName, percent, darken)
  */
 AutoTools.isSet = value => {
     value = window[value];
-    if(!value){
+    if(value === undefined || value === null){
         return false;
     }
     var toClass = {}.toString.call(value);
     if(toClass  == "[object Boolean]"){
-        return value;
+        return true;
     }
-    return toClass  == "[object String]";
+    return toClass  == "[object String]"; 
 };
 /**
  * Set the value of a Web Screen variable if it hasn't been set already from Tasker
