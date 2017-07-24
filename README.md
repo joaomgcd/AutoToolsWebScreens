@@ -4,6 +4,7 @@ Stuff injected into every AutoTools web Screens that you can use in your own Web
 # Quick Start
 Look at [this](demos/input/page.html) example on how to create a simple Web Screen with an input field.
 You'll learn how to make a Web Screen send out an AutoApps command and what a basic page structure looks like.
+You can even use the [direct link](https://raw.githubusercontent.com/joaomgcd/AutoToolsWebScreens/master/demos/input/page.html) of the file as the **Source** in the AutoTools Web Screen action and see it action on your Android device.
 
 # How To Use
 Look into each file and stuff will be documented :)
