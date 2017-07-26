@@ -91,7 +91,7 @@ AutoTools.isSet = value => {
     if(toClass  == "[object Boolean]"){
         return true;
     }
-    return toClass  == "[object String]"; 
+    return toClass  == "[object String]";
 };
 /**
  * Set the value of a Web Screen variable if it hasn't been set already from Tasker
@@ -250,7 +250,7 @@ AutoTools.objectToElements = function(rootElementsId, rootElementClass, input, i
         }
         if(itemTransformer){
             if(itemTransformer.item){
-                itemTransformer(itemObject);
+                itemTransformer.item(itemObject);
             }
             if(itemTransformer.onclick){
                 resultElement.onclick = e => itemTransformer.onclick(e.target.item);
@@ -328,3 +328,20 @@ AutoTools.GRAVITY_LEFT = 3;
  */
 AutoTools.setLayout = (width, height, x, y, gravity) => AutoToolsAndroid.setLayout(width, height, x, y, gravity);
 
+AutoTools.FLAG_NOT_FOCUSABLE = 8;
+AutoTools.FLAG_LAYOUT_NO_LIMITS = 512;
+AutoTools.FLAG_TURN_SCREEN_ON = 2097152;
+AutoTools.FLAG_ALT_FOCUSABLE_IM = 131072;
+AutoTools.FLAG_NOT_TOUCH_MODAL = 32;
+
+/**
+ * Will set overlay flags manually. Can be used to adjust if web screen requires input at runtime
+ * @param {int} flags - flags to set. Check here: https://developer.android.com/reference/android/view/WindowManager.LayoutParams.html
+ */
+AutoTools.setWindowFlags = (flags) => AutoToolsAndroid.setWindowFlags(flags);
+
+/**
+ * Will show a toast with the given text
+ * @param {string} text - text to show in the toast
+ */
+AutoTools.showToast = (text) => AutoToolsAndroid.showToast(text);
