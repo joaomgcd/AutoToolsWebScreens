@@ -6,6 +6,9 @@ Look at [this](demos/input/page.html) example on how to create a simple Web Scre
 You'll learn how to make a Web Screen send out an AutoApps command and what a basic page structure looks like.
 You can even use the [direct link](https://raw.githubusercontent.com/joaomgcd/AutoToolsWebScreens/master/demos/input/page.html) of the file as the **Source** in the AutoTools Web Screen action and see it action on your Android device.
 
+# Full Tutorial
+If you want a step by step tutorial on how to create your own Web Screen check [here](http://forum.joaoapps.com/index.php?resources/full-overview-on-creating-an-autotools-web-screen.284/). 
+
 # How To Use
 Look into each file and stuff will be documented :)
 
