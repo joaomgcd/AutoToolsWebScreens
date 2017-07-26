@@ -84,4 +84,4 @@ console.debug("log message");
 ```
 to make logs show up in the AutoTools logs if **System Logs** are enabled in the main AutoTools app under **Logs And Alerts**.
 
-If there's an error message in the console the screen will close unless you enable the **Continue On Error** option in the Web Screen options in Tasker.
+If there's an error message in the console and the **Close On Error** option is set in Tasker the screen will close.
