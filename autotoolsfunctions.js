@@ -214,6 +214,11 @@ AutoTools.objectToElements = function(rootElementsId, rootElementClass, input, i
                 prop = "src";
             }else if(tagName == "A"){
                 prop = "href";
+            }else if(tagName == "INPUT"){
+                if(element.type == "checkbox"){
+                    prop = "checked";
+                    value = value == "false" ? false : true;
+                }
             }else{
                 prop = "innerHTML";
             }
@@ -254,6 +259,22 @@ AutoTools.objectToElements = function(rootElementsId, rootElementClass, input, i
             }
             if(itemTransformer.onclick){
                 resultElement.onclick = e => itemTransformer.onclick(e.target.item);
+            }
+            if(itemTransformer.events){
+                for(var event of itemTransformer.events){
+                    var eventName = event.name;
+                    var cssQuery = event.query;
+                    var handler = event.handler;
+                    var elementForEvent = resultElement;
+                    if(cssQuery){
+                        elementForEvent = resultElement.querySelector(cssQuery);     
+                        if(!elementForEvent){
+                            continue;
+                        }                   
+                        elementForEvent.style["pointer-events"] = "auto";
+                    }
+                    elementForEvent.addEventListener(eventName,e => handler(e.target));
+                }
             }
         }
         if(itemObject.elementToAdd){

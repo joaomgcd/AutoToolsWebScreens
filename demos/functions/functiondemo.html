@@ -2,11 +2,10 @@
 <html>
 <head>
     <title>Function Demo</title>
-    <script type="text/javascript">
 
-    </script>    
     <meta name="autotoolswebscreen" type="variablejs" id="title" label="Titles" description="A list of comma seperated titles" defaultValue="Title 1,Title 2,Title 3"/>
     <meta name="autotoolswebscreen" type="variablejs" id="text" label="Texts" description="A list of comma seperated texts" defaultValue="text 1,text 2,text 3"/>
+     <meta name="autotoolswebscreen" type="variablejs" id="checked" label="Checked" description="A list of comma seperated true or false values" defaultValue="true,false,true"/>
     <script type="text/javascript">
         //This will set the default values for the various variables. These values will be set if they are not set from Tasker, so you can be sure they always have a value even if the user deletes the values in Tasker.
         //The "title" variable will be "Title 1,Title 2,Title 3" by default
@@ -14,6 +13,7 @@
         AutoTools.setDefaultValues({
             "title":"Title 1,Title 2,Title 3",
             "text":"text 1,text 2,text 3",
+            "checked":"true,false,true",
         });
     </script>
 </head>
@@ -21,6 +21,7 @@
     <div id="items"></div>
     <div class="item">
         <h2 class="title">Sample Title</h2>
+        <input type="checkbox" class="checked"></input>
         <div class="text">Sample Text</div>
     </div>
     <script type="text/javascript">
@@ -44,13 +45,22 @@
             </div>
         */
 
-        AutoTools.variablesToElements(["title", "text"], "items","item",{
+        AutoTools.variablesToElements(["title", "text", "checked"], "items","item",{
             "onclick":item=>{
+                if(!item){
+                    return;
+                }
                 console.log(item);
                 AutoTools.sendCommand(item.text);
                 AutoTools.say(item.text);
                 AutoTools.hapticFeedback();
-            }
+            },
+            "events":[{
+                "name":"change",
+                "query":".checked",
+                "handler":element=>console.log(element.checked)
+            }]
+            
         });
     </script>
 </body>
