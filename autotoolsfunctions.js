@@ -232,7 +232,7 @@ AutoTools.objectToElements = function(rootElementsId, rootElementClass, input, i
     var rootElement = elementToClone.cloneNode(true);
     AutoTools.show(rootElement);
     listRoot.innerHTML = "";
-    if(itemTransformer.onclick){
+    if(itemTransformer && itemTransformer.onclick){
         var styleNoPointerEvents = document.createElement("style");
         styleNoPointerEvents.innerHTML = `
         .${rootElementClass}{
@@ -263,8 +263,14 @@ AutoTools.objectToElements = function(rootElementsId, rootElementClass, input, i
             if(itemTransformer.events){
                 for(var event of itemTransformer.events){
                     var eventName = event.name;
-                    var cssQuery = event.query;
+                    if(!eventName){
+                        continue;
+                    }
                     var handler = event.handler;
+                    if(!handler){
+                        continue;
+                    }
+                    var cssQuery = event.query;
                     var elementForEvent = resultElement;
                     if(cssQuery){
                         elementForEvent = resultElement.querySelector(cssQuery);     
