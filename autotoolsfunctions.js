@@ -372,3 +372,8 @@ AutoTools.setWindowFlags = (flags) => AutoToolsAndroid.setWindowFlags(flags);
  * @param {string} text - text to show in the toast
  */
 AutoTools.showToast = (text) => AutoToolsAndroid.showToast(text);
+
+/**
+ * Will get the Tasker input that was used to show the screen
+ */
+AutoTools.getInput = () => JSON.parse(AutoToolsAndroid.getInput());
