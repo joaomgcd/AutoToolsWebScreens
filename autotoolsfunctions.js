@@ -377,3 +377,8 @@ AutoTools.showToast = (text) => AutoToolsAndroid.showToast(text);
  * Will get the Tasker input that was used to show the screen
  */
 AutoTools.getInput = () => JSON.parse(AutoToolsAndroid.getInput());
+
+/**
+ * Will externally browse the URL on your Android device
+ */
+AutoTools.browseUrl = url => AutoToolsAndroid.browseUrl(url);
