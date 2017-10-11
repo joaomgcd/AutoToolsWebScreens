@@ -273,10 +273,10 @@ AutoTools.objectToElements = function(rootElementsId, rootElementClass, input, i
                     var cssQuery = event.query;
                     var elementForEvent = resultElement;
                     if(cssQuery){
-                        elementForEvent = resultElement.querySelector(cssQuery);     
+                        elementForEvent = resultElement.querySelector(cssQuery);
                         if(!elementForEvent){
                             continue;
-                        }                   
+                        }
                         elementForEvent.style["pointer-events"] = "auto";
                     }
                     elementForEvent.addEventListener(eventName,e => handler(e.target));
@@ -379,6 +379,133 @@ AutoTools.showToast = (text) => AutoToolsAndroid.showToast(text);
 AutoTools.getInput = () => JSON.parse(AutoToolsAndroid.getInput());
 
 /**
- * Will externally browse the URL on your Android device
+ * Will get the Tasker input that was used to show the screen
+ */
+AutoTools.getTextInput = (title,message,initialText) => AutoToolsAndroid.getTextInput(title,message,initialText);
+
+/**
+ * Will open the URL on your Android device in an external app
  */
 AutoTools.browseUrl = url => AutoToolsAndroid.browseUrl(url);
+
+/**
+ * Will get the location of the overlay (as an object with two properties: x and y. Like {x:100,y:200}) f the screen is shown in overlay mode. If not, will return null.
+ */
+AutoTools.getOverlayPosition = () => {
+    var point = AutoToolsAndroid.getOverlayPosition();
+    if(!point){
+        return point;
+    }
+    return JSON.parse(point);
+}
+
+/**
+ * Will create a new style element in the header of the page with the contents passed in as parameter
+ * @param {string} css - css text to add in a style element
+ */
+AutoTools.addStyle = (css) => {
+    var sheet = document.createElement('style')
+    sheet.innerHTML = css;
+    document.head.appendChild(sheet);
+}
+
+/**
+ * Will return the input with the suffix 'px' if it's a number, otherwise will return the input
+ * @param {string} dimension - either a number or any other type of dimension
+ */
+AutoTools.getPixelsOrDimension = (dimension) => {
+    if(!isNaN(new Number(dimension))){
+        return dimension+"px";
+    }
+    return dimension;
+}
+
+/**
+ * Check if a certain flag is set
+ * @param {int} flags - flags to check
+ * @param {int} flagToCheck - flag to check
+ */
+AutoTools.checkFlag = (flags, flagToCheck) => {
+    if ((flags & flagToCheck) == flagToCheck){
+        return true;
+    }
+    return false;
+}
+
+
+AutoTools.DRAG_LOCK_ALL = "0";
+AutoTools.DRAG_LOCK_HORIZONTAL = "1";
+AutoTools.DRAG_LOCK_VERTICAL = "2";
+AutoTools.DRAG_LOCK_NONE = "3";
+
+/**
+ * Enable or disable vertical dragging in overlays
+ * @param {boolean} enable - select if you want to enable or disable it
+ */
+AutoTools.setDragInY = enable => AutoToolsAndroid.setDragInY(enable);
+
+/**
+ * Enable or disable horizontal dragging in overlays
+ * @param {boolean} enable - select if you want to enable or disable it
+ */
+AutoTools.setDragInX = enable => AutoToolsAndroid.setDragInX(enable);
+
+AutoTools.FLING_TO_DISMISS_NONE = "0";
+AutoTools.FLING_TO_DISMISS_ALL = "1";
+AutoTools.FLING_TO_DISMISS_UP = "2";
+AutoTools.FLING_TO_DISMISS_RIGHT = "3";
+AutoTools.FLING_TO_DISMISS_DOWN = "4";
+AutoTools.FLING_TO_DISMISS_LEFT = "5";
+AutoTools.FLING_TO_DISMISS_UP_AND_DOWN = "6";
+AutoTools.FLING_TO_DISMISS_LEFT_AND_RIGHT = "7";
+/**
+ * Enable or disable fling to dismiss on negative X
+ * @param {boolean} enable - select if you want to enable or disable it
+ */
+AutoTools.setflingOnNegativeX = enable => AutoToolsAndroid.setflingOnNegativeX(enable);
+
+/**
+ * Enable or disable fling to dismiss on positive X
+ * @param {boolean} enable - select if you want to enable or disable it
+ */
+AutoTools.setflingOnPositiveX = enable => AutoToolsAndroid.setflingOnPositiveX(enable);
+
+/**
+ * Enable or disable fling to dismiss on negative Y
+ * @param {boolean} enable - select if you want to enable or disable it
+ */
+AutoTools.setflingOnNegativeY = enable => AutoToolsAndroid.setflingOnNegativeY(enable);
+
+/**
+ * Enable or disable fling to dismiss on positive Y
+ * @param {boolean} enable - select if you want to enable or disable it
+ */
+AutoTools.setflingOnPositiveY = enable => AutoToolsAndroid.setflingOnPositiveY(enable);
+
+/**
+ * Check if fling to dismiss is enabled for left
+ * @param {string} fling - current fling to dismiss value
+ */
+AutoTools.checkFlingLeft = fling => fling == AutoTools.FLING_TO_DISMISS_LEFT || fling == AutoTools.FLING_TO_DISMISS_LEFT_AND_RIGHT || fling == AutoTools.FLING_TO_DISMISS_ALL;
+/**
+ * Check if fling to dismiss is enabled for right
+ * @param {string} fling - current fling to dismiss value
+ */
+AutoTools.checkFlingRight = fling => fling == AutoTools.FLING_TO_DISMISS_RIGHT || fling == AutoTools.FLING_TO_DISMISS_LEFT_AND_RIGHT || fling == AutoTools.FLING_TO_DISMISS_ALL;
+/**
+ * Check if fling to dismiss is enabled for up
+ * @param {string} fling - current fling to dismiss value
+ */
+AutoTools.checkFlingUp = fling => fling == AutoTools.FLING_TO_DISMISS_UP || fling == AutoTools.FLING_TO_DISMISS_UP_AND_DOWN || fling == AutoTools.FLING_TO_DISMISS_ALL;
+/**
+ * Check if fling to dismiss is enabled for down
+ * @param {string} fling - current fling to dismiss value
+ */
+AutoTools.checkFlingDown = fling => fling == AutoTools.FLING_TO_DISMISS_DOWN || fling == AutoTools.FLING_TO_DISMISS_UP_AND_DOWN || fling == AutoTools.FLING_TO_DISMISS_ALL;
+
+/**
+ * Sleep for some time. Should be called with the await keyword
+ * @param {int} time - ms to wait
+ */
+AutoTools.sleep = async time => new Promise(resolve=>setTimeout(resolve,time));
+
