@@ -13,12 +13,38 @@
 	<div id="updatable"></div>
 </body>
 <script type="text/javascript">
+	/*
+	
+	This example enables the "Update" option in the AutoTools Web Screen configuration page in Tasker.
+	This happens because the "autoToolsUpdateValues" function is present on the page below.
+	The following task in Tasker will make the text "initial value" show up initially and after 3 seconds the text "different value" will show.
+	Test (106)
+		A1: AutoTools Web Screen [ Configuration:
+	Source: https://raw.githubusercontent.com/joaomgcd/AutoToolsWebScreens/master/demos/updating/page.html
+	Update: true
+	Value To Update: initial value 
+	Timeout (Seconds):30 ] 
+		A2: Wait [ MS:0 Seconds:3 Minutes:0 Hours:0 Days:0 ] 
+		A3: AutoTools Web Screen [ Configuration:
+	Source: https://raw.githubusercontent.com/joaomgcd/AutoToolsWebScreens/master/demos/updating/page.html
+	Update: true
+	Value To Update: different value 
+	Timeout (Seconds):30 ] 
+
+	*/
+
+	//Sets default value in case user doesn't set it
 	AutoTools.setDefaultValues({
 		"valueToUpdate": "Some Value"
 	});
+
+	//function will update the div with id "updatable" with whatever text is passed in the parameter
 	var updateValue = function(value){
 		document.querySelector("#updatable").innerHTML = value;
 	}
+
+	//Because this function is present the "Update" option will appear in the Tasker configuration screen. All the values used as inputs there will be set in the "values" parameter here
+	//In this example the "valueToUpdate" value is present because that's the name of the Web Screen Variable this screen has declared in the <head> section of the page
 	var autoToolsUpdateValues = function(values){
 		updateValue(values.valueToUpdate);
 	}
