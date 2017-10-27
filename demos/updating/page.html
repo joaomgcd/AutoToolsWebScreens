@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<!--<script src="../../autotoolsfunctions.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../autotoolsstyle.css" />-->
+
+	<meta name="autotoolswebscreen" type="variablejs" id="valueToUpdate" label="Value To Update" description="Value used to update the page" defaultValue="Some Value" hint="Some Value" />
+	
+
+</head>
+<body>
+	<div id="updatable"></div>
+</body>
+<script type="text/javascript">
+	AutoTools.setDefaultValues({
+		"valueToUpdate": "Some Value"
+	});
+	var updateValue = function(value){
+		document.querySelector("#updatable").innerHTML = value;
+	}
+	var autoToolsUpdateValues = function(values){
+		updateValue(values.valueToUpdate);
+	}
+	updateValue(valueToUpdate);
+</script>
+</html>
