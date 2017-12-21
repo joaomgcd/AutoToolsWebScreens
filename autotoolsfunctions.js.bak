@@ -546,6 +546,7 @@ AutoTools.onclickandlongclick = function(element, callbackClick, callbackLongCli
     };
 
     var start = function(e) {
+        console.log(e);
 
         if (e.type === "click" && e.button !== 0) {
             return;
