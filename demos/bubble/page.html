@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Image" id="imageSource" label="Image" isIcon="true"/>
+	<meta name="autotoolswebscreen" type="variablejs" subtype="boolean" group="Image" id="imageRound" label="Round Image" defaultValue="true" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Image Filter" id="filterGrayscale" label="Grayscale" defaultValue="0%" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Image Filter" id="filterBlur" label="Blur" defaultValue="0" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Image Filter" id="filterOpacity" label="Opacity" defaultValue="100%" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Image Filter" id="filterBrightness" label="Brightness" defaultValue="100%" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Image Filter" id="filterContrast" label="Contrast" defaultValue="100%" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Image Filter" id="filterSaturate" label="Saturate" defaultValue="100%" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Image Filter" id="filterSepia" label="Sepia" defaultValue="0%" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Image Filter" id="filterHue-rotate" label="Hue Rotate" hint="180deg" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Image Filter" id="filterInvert" label="Invert" defaultValue="0%" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Image Filter" id="filterDrop-shadow" label="Drop Shadow" hint="3px 3px 10px black" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Text" id="text" description="Set to 'null' to remove on update" label="Text" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Text" id="textSize" label="Size" defaultValue="16px" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Text" id="textMaxWidth" label="Max Width"  />
+	<meta name="autotoolswebscreen" type="variablejs" group="Text" id="textPosition" label="Position" options="Bottom,Left,Right,Top" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Text" id="textColor" label="Color" isColor="true" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Text" id="textBorderColor" label="Character Border Color" description="Color of the border for each character in the text" isColor="true" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Text" id="textBorderAroundColor" label="Border Color" description="Color of the border for the text box" isColor="true" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Text" id="textBorderAroundThickness" label="Border Color Thickness" description="Thickness of the border in pixels" defaultValue="1" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Text" id="textBorderAroundStyle" label="Border Style" defaultValue="solid" options="solid,dotted,dashed,double,groove,ridge,inset,outset" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Text" id="textBackground" label="Background" isColor="true" defaultValue="linear-gradient(rgba(151, 190, 252, 0.7), rgba(182, 208, 249, 0.7))" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Badge" id="badgeText" label="Text" description="Set to 'null' to remove on update" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Badge" id="badgeTextColor" label="Text Color" isColor="true" defaultValue="white" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Badge" id="badgeBackground" label="Background" isColor="true"  defaultValue="red" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Badge" id="badgePosition" label="Position" options="Top Right,Bottom Right,Bottom Left,Top Left" defaultValue="Top Right" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Commands" id="commandTap" label="Tap" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Commands" id="commandLongTap" label="Long Tap" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Commands" id="commandSwipeUp" label="Swipe Up" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Commands" id="commandSwipeDown" label="Swipe Down" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Commands" id="commandSwipeLeft" label="Swipe Left" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Commands" id="commandSwipeRight" label="Swipe Right" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Commands" id="commandPrefix" label="Prefix"  description="Optional prefix for all the commands above" />
+	<meta name="autotoolswebscreen" type="variablejs" subtype="boolean" group="Commands" id="reportPositionDownEnabled" label="Tap Down Position" description="If enabled will send an AutoApps command with the position of the bubble when you put your finger on it (x,y format)" defaultValue="false" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Commands" id="commandPrefixPositionDown" label="Command Prefix Down" description="Prefix for the position command" hint="positiondown" defaultValue="positiondown" />
+	<meta name="autotoolswebscreen" type="variablejs" subtype="boolean" group="Commands" id="reportPositionEnabled" label="Tap Up Position" description="If enabled will send an AutoApps command with the position of the bubble after you release it (x,y format)" defaultValue="false" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Commands" id="commandPrefixPosition" label="Command Prefix Up" description="Prefix for the position command" hint="positionup" defaultValue="positionup" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Image" id="borderWidth" label="Border Width" defaultValue="0" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Image" id="borderColor" label="Border Color" defaultValue="black" isColor="true" />
+	<meta name="autotoolswebscreen" type="variablejs" group="Image" id="borderStyle" label="Border Style" defaultValue="solid" options="solid,dotted,dashed,double,groove,ridge,inset,outset" />
+	
+	
+
+	
+	<!--<script src="autotools.js"></script>
+	<link rel="stylesheet" type="text/css" href="autotoolsstyle.css" />-->
+	<style type="text/css">
+		html, body{
+			margin: 0px;
+			height: 100vh;
+			overflow: hidden;
+		}
+		#wrapper{
+			//width: 100vw;
+			//height: 100vh;
+			box-sizing: border-box;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+    		justify-content: center;
+		}
+		#textelement{
+			font-family: 'Quicksand', sans-serif;
+		    color: yellow;
+    		white-space: nowrap;
+    		border-radius: 10px;
+
+		    animation-duration: 0.21s;
+		    animation-timing-function: cubic-bezier(.17,.67,.73,1.44);
+		}
+		img{
+			object-fit: contain;
+			box-sizing: border-box;
+			flex: 1;
+		    min-height: 10px;
+		    min-width: 10px;
+		}
+		#imagewrapper{
+			position: relative;
+			display: flex;
+		}
+		#badge{
+		    position: absolute;
+		    font-weight: bold;
+		    border-radius: 40%;
+		    color: white;
+		    padding: 4px;
+		    border: 1px solid black;
+
+		    animation-duration: 0.21s;
+		    animation-timing-function: cubic-bezier(.17,.67,.73,1.44);
+		}
+		@keyframes popin {
+			from {
+    			transform: scale(0);
+			}
+			to {
+				transform: scale(1);
+			}
+		}
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="imagewrapper">
+			<img id="bubble"></img>
+			<div id="badge" class="hidden">1002</div>
+		</div>
+		<div id="textelement" class="hidden"></div>
+	</div>
+</body>
+	<script type="text/javascript">
+
+		//var imageSource = "http://www.wallpapersworldonline.com/wp-content/uploads/2014/01/nice-wallpapers-desktop-84.jpg";
+		/*var commandTap = "taptap";
+		var commandLongTap = "lloooonnngg";
+		var commandSwipeUp = "upman";
+		var imageRound = true;
+		//var borderWidth = "40";
+		//var borderColor = "red";
+		//window["filterDrop-shadow"] = "3px 3px 1px black";
+		//window["filterHue-rotate"] = "180deg";
+		//var filterInvert = "100%";
+		//var filterOpacity = "50%";
+		//var filterSaturate = "250%";
+		var filterSepia = "100%";
+		//var borderStyle = "outset";*/
+		//var text = "Hey this is a super duper long text oh yes it is";
+		//var textBorderAroundColor = "black";
+		//var textBorderAroundThickness = "3";
+		//var textColor = "white";
+		//var badgeText = "5";
+		//var textMaxWidth = "250";
+		//var badgePosition = "Bottom Left";
+		//var textPosition = "Bottom";
+		if(!AutoTools.getInput){
+			AutoTools.getInput = ()=>{return{webscreenWindow:{dialogHeight:"100",dialogWidth:"100"}}};
+		}
+		AutoTools.setDefaultValues({
+			"imageSource":"https://joaoapps.com/AutoApps/com.joaomgcd.autotools.png",
+			"commandPrefix":"",
+			"commandTap":"",
+			"commandLongTap":"",
+			"imageRound": true,
+			"borderWidth": "0",
+			"borderColor": "black",
+			"borderStyle": "solid",
+			"textBorderAroundStyle": "solid",
+			"filterGrayscale": "0%",
+			"filterBlur": "0",
+			"filterInvert": "0%",
+			"filterOpacity": "100%",
+			"filterSaturate": "100%",
+			"filterSepia": "0%",
+			"textColor": "black",
+			"textSize": "16px",
+			"textPosition": "Left",
+			"textBackground": "linear-gradient(rgba(151, 190, 252, 0.7), rgba(182, 208, 249, 0.7))",
+			"badgeTextColor":"white",
+			"badgeBackground":"red",
+			"badgePosition":"Top Right",
+			"text":"null",
+			"badgeText":"null",
+			"textBorderAroundThickness":"1",			
+			"reportPositionDownEnabled":false,				
+			"reportPositionEnabled":false,			
+			"commandPrefixPositionDown":"positiondown",
+			"commandPrefixPosition":"positionup",
+		});
+		var wrapperElement = document.querySelector("#wrapper");
+		var positions = {
+			"Top": "column-reverse",
+			"Bottom": "column",
+			"Left": "row-reverse",
+			"Right": "row",
+		}
+		var positionsBadge = {
+			"Top Right": {top:0,right:0},
+			"Bottom Right": {bottom:0,Right:0},
+			"Top Left": {top:0,left:0},
+			"Bottom Left": {bottom:0,left:0},
+		}
+		var setTextAndAnimate = (element,text) => {
+			if(text == ""){
+				return;
+			}		
+			var hideIfEmpty = false;
+			if(text == "null"){
+				text = undefined;
+				hideIfEmpty = true;
+			}
+			if(text !== undefined){
+				AutoTools.show(element);
+				element.style["animation-name"] = "d";
+				element.innerText = text;
+				setTimeout(()=>element.style["animation-name"] = "popin");
+			}else{
+				if(hideIfEmpty){
+					AutoTools.hide(element);	
+				}
+			}
+		}
+		var autoToolsUpdateValues = function(values){
+			for(var prop in values){
+				var value = values[prop];
+				window[prop] = value;
+				//console.debug(prop +": "+window[prop]);
+			}
+			setFilters();
+			if(values.imageSource){
+				bubbleElement.src = values.imageSource;
+			}
+			//setTextAndAnimate(textElement,values.text);
+			adjustTextPosition(values.text);
+			adjustBadgePosition(values.badgeText);
+			//setTextAndAnimate(badgeElement,values.badgeText ,values.badgeText == "null");
+			adjustTextWidth();
+			adjustWindowSize();
+		}
+		var badgeElement = document.querySelector("#badge");
+	
+		badgeElement.style["color"] = badgeTextColor;
+		badgeElement.style["background"] = badgeBackground;
+		var adjustBadgePosition = (badgeText)=>{
+			var position = positionsBadge[badgePosition];
+			badgeElement.style["top"] = "unset";
+			badgeElement.style["bottom"] = "unset";
+			badgeElement.style["left"] = "unset";
+			badgeElement.style["right"] = "unset";
+			for(var s in position){
+				badgeElement.style[s] = position[s];
+			}
+			setTextAndAnimate(badgeElement,badgeText,badgeText == "null")
+		}
+		adjustBadgePosition(badgeText);
+		var textElement = document.querySelector("#textelement");
+		if(AutoTools.isSet("textBorderColor")){
+			textElement.style["-webkit-text-stroke-color"] = textBorderColor;
+			textElement.style["-webkit-text-stroke-width"] = "1px";	
+		}
+
+		if(!AutoTools.isSet("textBorderAroundThickness")){
+			textBorderAroundThickness = "1";
+		}
+		var borderTextNumber = new Number(textBorderAroundThickness);		
+		if(!isNaN(borderTextNumber)){
+			textBorderAroundThickness+="px";
+		}
+		if(AutoTools.isSet("textBorderAroundColor")){
+			textElement.style["border"] = `${textBorderAroundThickness} ${textBorderAroundStyle} ${textBorderAroundColor}`;
+		}
+		textElement.style["color"] = textColor;
+		var marginVerticalText = 0;
+		var marginHorizontalText = 0;
+		var marginHorizontalText = 0;
+		var adjustTextPosition = (text)=>{
+			wrapperElement.style["flex-direction"] = positions[textPosition];
+			var textVertical = textPosition == "Top" || textPosition == "Bottom";
+			var paddingText = 8;
+			textElement.style["padding"] = paddingText + "px";	
+			if(textVertical){
+				marginVerticalText = 8;
+				var type = textPosition == "Top" ? "bottom" : "top";
+				textElement.style["margin-"+type] = marginVerticalText + "px";
+			}else{
+				marginHorizontalText = 8;
+				var type = textPosition == "Left" ? "right" : "left";
+				textElement.style["margin-"+type] = marginHorizontalText + "px";	
+			}
+			textElement.style["font-size"] = textSize;
+			textElement.style["background"] = textBackground;
+			setTextAndAnimate(textElement,text);
+		};
+		adjustTextPosition(text);
+
+		var adjustTextWidth = ()=>{
+			if(AutoTools.isSet("textMaxWidth")){
+				textElement.style["max-width"] = "initial";
+				textElement.style["min-width"] = "initial";
+				textElement.style["white-space"] = "nowrap";	
+				if(!isNaN(new Number(textMaxWidth))){
+					textMaxWidth = Math.min(textMaxWidth,textElement.clientWidth);
+					textMaxWidth += "px";
+				}
+				textElement.style["max-width"] = textMaxWidth;
+				textElement.style["min-width"] = textMaxWidth;
+				textElement.style["white-space"] = "normal";
+			}
+		}
+		adjustTextWidth();
+		
+		var bubbleElement = document.querySelector("#bubble");
+		bubbleElement.src = imageSource;
+		var taskerInput = AutoTools.getInput();
+
+		var currentHeight = new Number(taskerInput.webscreenWindow.dialogHeight);
+		var currentWidth = new Number(taskerInput.webscreenWindow.dialogWidth);
+		var canAdjustSize = true;
+		if(isNaN(currentHeight) || isNaN(currentWidth)){
+			canAdjustSize = false;
+		}
+		if(canAdjustSize){
+			bubbleElement.style["width"] = currentWidth + "px";
+			bubbleElement.style["height"] = currentHeight + "px";
+			bubbleElement.style["min-width"] = currentWidth + "px";
+			bubbleElement.style["min-height"] = currentHeight + "px";
+		}
+		var adjustWindowSize = ()=>{
+			if(text == null){
+				return;
+			}
+			if(!canAdjustSize){
+				console.log("invalid sizes");
+				return;
+			}
+			var textWidth = textElement.clientWidth;
+			var textHeight = textElement.clientHeight;
+			var realHeight = null;
+			var realWidth = null;
+			var addBorder = !isNaN(borderTextNumber);
+			var doubleBorder = 0;
+			if(addBorder){
+				doubleBorder = borderTextNumber*2;
+			}
+			if(textPosition == "Top" || textPosition == "Bottom"){
+				
+					/*var bubbleHeight = bubbleElement.clientHeight;
+					var heightRatio =  currentHeight / bubbleHeight;
+					var realHeight = Math.floor(currentHeight * heightRatio);*/	
+					realHeight = currentHeight + textHeight + marginVerticalText;
+					realWidth = Math.max(currentWidth,textWidth);				
+			}else{
+					/*var bubbleWidth = bubbleElement.clientWidth;
+					AutoTools.showToast(currentWidth+","+bubbleWidth);
+					var widthRatio =  currentWidth / bubbleWidth;
+					var realWidth = Math.floor(currentWidth * widthRatio);*/
+					realWidth = currentWidth + textWidth + marginHorizontalText;
+					realHeight = Math.max(currentHeight,textHeight);				
+			}
+			if(realHeight && realWidth){
+				if(addBorder){
+					realHeight += doubleBorder;
+					realWidth += doubleBorder;
+				}
+				AutoTools.setSize(realWidth,realHeight);
+			}
+		};
+		//adjustWindowSize();
+		setTimeout(adjustWindowSize);
+		/*setTimeout(()=>AutoTools.showToast(bubbleElement.clientWidth+","+bubbleElement.clientHeight),1000);
+		setTimeout(()=>AutoTools.showToast(bubbleElement.offsetWidth+","+bubbleElement.offsetHeight),1000);
+		setTimeout(()=>AutoTools.showToast(bubbleElement.scrollWidth+","+bubbleElement.scrollHeight),1000);*/
+
+		if(imageRound){
+			bubbleElement.style["border-radius"] = "100%";
+		}
+		if(!isNaN(new Number(borderWidth))){
+			borderWidth += "px";
+		}
+		bubbleElement.style["border"] = `${borderWidth} ${borderStyle} ${borderColor}`;
+		var	getFilter = function(...vars){
+			var filter = "";
+			for(var v of vars){
+				if(!AutoTools.isSet(v)){
+					continue;
+				}
+				var shortName = v.replace("filter","").toLowerCase();
+				var value = window[v];
+				if(!isNaN(new Number(value))){
+					value += "px";
+				}
+				filter+=`${shortName}(${value}) `;
+			}
+			return filter;
+		}
+		if(AutoTools.isSet("filterDrop-shadow")){
+			var splitShadow = window["filterDrop-shadow"].split(" ");
+			if(splitShadow.length == 4){
+				var getValue = original => {
+					/*var value = new Number(original.replace("px",""));
+					if(isNaN(value)){
+						return null;
+					}
+					return value;*/
+					return original;
+				}
+				var x = getValue(splitShadow[0]);
+				var y = getValue(splitShadow[1]);
+				var blur = getValue(splitShadow[2]);
+				if(x && y && blur){
+					bubbleElement.style["width"] = `calc(100vw - ${x} - ${blur})`
+					bubbleElement.style["height"] = `calc(100vh - ${y} - ${blur})`
+				}
+			}
+		}
+		var setFilters = () => {
+			var filter = getFilter("filterGrayscale","filterBlur","filterDrop-shadow","filterHue-rotate","filterInvert","filterOpacity","filterSaturate","filterSepia");
+			//console.debug(filter);
+			bubbleElement.style["filter"] = filter;
+		}		
+		setFilters();
+		var reportCurrentPosition = (isDown) =>{
+			if(isDown && !reportPositionDownEnabled){
+				return;
+			}
+			if(!isDown && !reportPositionEnabled){
+				return;
+			}
+			if(!AutoTools.getOverlayPosition){
+				return;
+			}
+	        var currentPosition = AutoTools.getOverlayPosition();
+	        if(!currentPosition){
+	        	return;
+	        }
+	        var prefix = isDown ? commandPrefixPositionDown : commandPrefixPosition;
+	        AutoTools.sendCommand(`${currentPosition.x},${currentPosition.y}`,prefix);
+		}
+		function swipedetect(el, callback){
+		  
+		    var touchsurface = el,
+		    swipedir,
+		    startX,
+		    startY,
+		    distX,
+		    distY,
+		    threshold = 5, //required min distance traveled to be considered swipe
+		    longThreshold = 5, // maximum distance allowed at the same time in perpendicular direction
+		    restraint = 100, // maximum distance allowed at the same time in perpendicular direction
+		    allowedTime = 300, // maximum time allowed to travel that distance
+		    allowedTimeClick = 150, // maximum time allowed to travel that distance
+		    longTapTime = 500,
+		    elapsedTime,
+		    startTime,
+		    handleswipe = callback || function(swipedir){}
+		  	var timeout = null;
+
+		    touchsurface.addEventListener('touchstart', function(e){
+		        var touchobj = e.changedTouches[0]
+		        swipedir = 'none'
+		        dist = 0
+		        startX = touchobj.pageX
+		        startY = touchobj.pageY
+		        distX = 0;
+		        distY = 0;
+		        startTime = new Date().getTime() // record time when finger first makes contact with surface
+		        e.preventDefault();
+		        timeout = setTimeout(()=>{
+		        	if(Math.abs(distX) <= longThreshold && Math.abs(distY) <= longThreshold){
+		        		handleswipe("long");	
+		        	}
+		    	},longTapTime);
+		        reportCurrentPosition(true);
+		    }, false)
+		  
+		    touchsurface.addEventListener('touchmove', function(e){
+		        var touchobj = e.changedTouches[0];
+		    	distX = Math.max(Math.abs(touchobj.pageX) - startX,distX);
+		        distY = Math.max(Math.abs(touchobj.pageY) - startY,distY);
+		        e.preventDefault() // prevent scrolling when inside DIV
+		    }, false)
+		  
+		    touchsurface.addEventListener('touchend', function(e){
+		    	clearTimeout(timeout);
+		        var touchobj = e.changedTouches[0]
+		        distX = touchobj.pageX - startX // get horizontal dist traveled by finger while in contact with surface
+		        distY = touchobj.pageY - startY // get vertical dist traveled by finger while in contact with surface
+		        elapsedTime = new Date().getTime() - startTime // get time elapsed
+		        console.log(elapsedTime);
+		        if (elapsedTime <= allowedTime){ // first condition for awipe met
+		            if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
+		                swipedir = (distX < 0)? 'Left' : 'Right' // if dist traveled is negative, it indicates left swipe
+		            }
+		            else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint){ // 2nd condition for vertical swipe met
+		                swipedir = (distY < 0)? 'Up' : 'Down' // if dist traveled is negative, it indicates up swipe
+		            }
+		            if(swipedir == "none"){
+		            	if(elapsedTime <= allowedTimeClick){
+		        			handleswipe(swipedir);
+		            	}
+		            }else{
+		        		handleswipe(swipedir);	
+		            }
+		        }	
+		        reportCurrentPosition(false);
+		        e.preventDefault()
+		    }, false)
+		}
+		swipedetect(bubbleElement,direction=>{
+			console.log(direction);
+			var command = null;
+			if(direction == "none"){
+				command = commandTap;
+			}if(direction == "long"){
+				command = commandLongTap;
+			}else{
+				var name = "commandSwipe"+direction;
+				if(AutoTools.isSet(name)){
+					command = window[name];
+				}
+			}
+			AutoTools.sendCommand(command,commandPrefix,true);
+		});
+	</script>
+</html>
